@@ -69,7 +69,7 @@ fluid.promise.sequence([
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
-                    sensors: { }
+                    sensors: {}
                 }
             }
         );
@@ -90,13 +90,28 @@ fluid.promise.sequence([
                     collector: "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.collector)"
                 },
                 modelRelay: {
-                    source: "{fakeSensor}.model.sensorData",
                     target: "{collector}.model.sensors.fakeSensor",
                     forward: {
                         excludeSource: "init"
                     },
-                    singleTransform: {
-                        type: "fluid.identity"
+                    transform: {
+                        transform: {
+                            type: "fluid.identity",
+                            input: "{fakeSensor}.model.sensorData"
+                        },
+                        history: {
+                            transform: {
+                                type: "gpii.nexus.transforms.appendToArray",
+                                input: {
+                                    transform: {
+                                        type: "gpii.nexus.transforms.timeStamp",
+                                        input: "{fakeSensor}.model.sensorData.value"
+                                    }
+                                },
+                                sourceArray: "{collector}.model.sensors.fakeSensor.history",
+                                maxLength: 10
+                            }
+                        }
                     }
                 },
                 listeners: {
