@@ -13,12 +13,22 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
+            "gpii.nexus.sensorPeer",
+            {
+                gradeNames: ["gpii.selfDestroyingModel"],
+                model: {
+                    sensorData: {}
+                }
+            }
+        );
+    },
+    function () {
+        return gpii.writeNexusDefaults(
+            nexusHost,
+            nexusPort,
             "gpii.nexus.fakeSensor",
             {
-                gradeNames: [ "fluid.modelComponent" ],
-                model: {
-                    sensorData: { }
-                }
+                gradeNames: ["gpii.nexus.sensorPeer"]
             }
         );
     },
@@ -28,10 +38,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.atlasScientificDriver.phSensor",
             {
-                gradeNames: [ "fluid.modelComponent" ],
-                model: {
-                    sensorData: { }
-                }
+                gradeNames: ["gpii.nexus.sensorPeer"]
             }
         );
     },
@@ -41,10 +48,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.atlasScientificDriver.ecSensor",
             {
-                gradeNames: [ "fluid.modelComponent" ],
-                model: {
-                    sensorData: { }
-                }
+                gradeNames: ["gpii.nexus.sensorPeer"]
             }
         );
     },
@@ -54,10 +58,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.rpiSenseHatDriver.tempSensor1",
             {
-                gradeNames: [ "fluid.modelComponent" ],
-                model: {
-                    sensorData: { }
-                }
+                gradeNames: ["gpii.nexus.sensorPeer"]
             }
         );
     },
@@ -67,10 +68,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.rpiSenseHatDriver.tempSensor2",
             {
-                gradeNames: [ "fluid.modelComponent" ],
-                model: {
-                    sensorData: { }
-                }
+                gradeNames: ["gpii.nexus.sensorPeer"]
             }
         );
     },
@@ -80,7 +78,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.scienceLab.collector",
             {
-                gradeNames: [ "fluid.modelComponent" ],
+                gradeNames: ["fluid.modelComponent"],
                 model: {
                     sensors: {}
                 }
@@ -93,7 +91,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.scienceLab.sendFakeSensor",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: ["gpii.nexus.recipeProduct"],
                 componentPaths: {
                     fakeSensor: null,
                     collector: null
@@ -103,34 +101,25 @@ fluid.promise.sequence([
                     collector: "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.collector)"
                 },
                 modelRelay: {
+                    source: "{fakeSensor}.model.sensorData",
                     target: "{collector}.model.sensors.fakeSensor",
                     forward: {
                         excludeSource: "init"
                     },
-                    transform: {
-                        transform: {
-                            type: "fluid.identity",
-                            input: "{fakeSensor}.model.sensorData"
-                        },
-                        history: {
-                            transform: {
-                                type: "gpii.nexus.transforms.appendToArray",
-                                input: {
-                                    transform: {
-                                        type: "gpii.nexus.transforms.timeStamp",
-                                        input: "{fakeSensor}.model.sensorData.value"
-                                    }
-                                },
-                                sourceArray: "{collector}.model.sensors.fakeSensor.history",
-                                maxLength: 10
-                            }
-                        }
+                    singleTransform: {
+                        type: "fluid.identity"
                     }
                 },
-                listeners: {
-                    "onDestroy.removeFakeSensor": {
-                        listener: "{collector}.applier.change",
-                        args: [ "sensors.fakeSensor", null, "DELETE" ]
+                modelListeners: {
+                    "{fakeSensor}.model.sensorData.value": {
+                        funcName: "gpii.nexus.recordValueHistory",
+                        args: [
+                            "{change}.value",
+                            "value",
+                            "{collector}",
+                            "sensors.fakeSensor.history",
+                            30
+                        ]
                     }
                 }
             }
@@ -142,7 +131,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.scienceLab.sendPhSensor",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: ["gpii.nexus.recipeProduct"],
                 componentPaths: {
                     phSensor: null,
                     collector: null
@@ -160,12 +149,6 @@ fluid.promise.sequence([
                     singleTransform: {
                         type: "fluid.identity"
                     }
-                },
-                listeners: {
-                    "onDestroy.removePhSensor": {
-                        listener: "{collector}.applier.change",
-                        args: [ "sensors.phSensor", null, "DELETE" ]
-                    }
                 }
             }
         );
@@ -176,7 +159,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.scienceLab.sendEcSensor",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: ["gpii.nexus.recipeProduct"],
                 componentPaths: {
                     ecSensor: null,
                     collector: null
@@ -194,12 +177,6 @@ fluid.promise.sequence([
                     singleTransform: {
                         type: "fluid.identity"
                     }
-                },
-                listeners: {
-                    "onDestroy.removeEcSensor": {
-                        listener: "{collector}.applier.change",
-                        args: [ "sensors.ecSensor", null, "DELETE" ]
-                    }
                 }
             }
         );
@@ -210,7 +187,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.scienceLab.sendRpiTempSensor1",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: ["gpii.nexus.recipeProduct"],
                 componentPaths: {
                     tempSensor: null,
                     collector: null
@@ -229,10 +206,16 @@ fluid.promise.sequence([
                         type: "fluid.identity"
                     }
                 },
-                listeners: {
-                    "onDestroy.removeRpiTempSensor1": {
-                        listener: "{collector}.applier.change",
-                        args: [ "sensors.rpiTempSensor1", null, "DELETE" ]
+                modelListeners: {
+                    "{tempSensor}.model.sensorData.value": {
+                        funcName: "gpii.nexus.recordValueHistory",
+                        args: [
+                            "{change}.value",
+                            "value",
+                            "{collector}",
+                            "sensors.rpiTempSensor1.history",
+                            30
+                        ]
                     }
                 }
             }
@@ -244,7 +227,7 @@ fluid.promise.sequence([
             nexusPort,
             "gpii.nexus.scienceLab.sendRpiTempSensor2",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: ["gpii.nexus.recipeProduct"],
                 componentPaths: {
                     tempSensor: null,
                     collector: null
@@ -263,10 +246,16 @@ fluid.promise.sequence([
                         type: "fluid.identity"
                     }
                 },
-                listeners: {
-                    "onDestroy.removeRpiTempSensor2": {
-                        listener: "{collector}.applier.change",
-                        args: [ "sensors.rpiTempSensor2", null, "DELETE" ]
+                modelListeners: {
+                    "{tempSensor}.model.sensorData.value": {
+                        funcName: "gpii.nexus.recordValueHistory",
+                        args: [
+                            "{change}.value",
+                            "value",
+                            "{collector}",
+                            "sensors.rpiTempSensor2.history",
+                            30
+                        ]
                     }
                 }
             }
