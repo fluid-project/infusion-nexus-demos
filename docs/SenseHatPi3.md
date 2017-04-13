@@ -126,7 +126,7 @@ And enable the service:
 Configure wireless networking
 -----------------------------
 
-To join to "nexusnet" network:
+To join the "nexusnet" network:
 
 - Run `wpa_passphrase nexusnet`
 - Enter the passphrase when prompted
