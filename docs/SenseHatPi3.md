@@ -104,14 +104,17 @@ Create a systemd service at /etc/systemd/system/nexus_sense_hat_driver.service:
 
     [Unit]
     Description=Nexus Sense HAT driver
+    Requires=network-online.target avahi-daemon.service
+    After=network-online.target avahi-daemon.service
 
     [Service]
     WorkingDirectory=/home/pi/nexus-demos/science-lab/rpi-sense-hat-driver
     ExecStart=/opt/node-v6.10.2-linux-armv7l/bin/node RunRpiSenseHatDriver.js --host HOSTNAME --number NUMBER
     User=pi
     Group=pi
-    Restart=always
     RestartSec=5
+    TimeoutStopSec=10
+    Restart=always
 
     [Install]
     WantedBy=multi-user.target
@@ -119,3 +122,26 @@ Create a systemd service at /etc/systemd/system/nexus_sense_hat_driver.service:
 And enable the service:
 
     $ sudo systemctl enable nexus_sense_hat_driver.service
+
+Configure wireless networking
+-----------------------------
+
+To join the "nexusnet" network:
+
+- Run `wpa_passphrase nexusnet`
+- Enter the passphrase when prompted
+- Edit `/etc/wpa_supplicant/wpa_supplicant.conf` and append the output of `wpa_passphrase` above (minus the `#psk` line with the cleartext passphrase)
+
+See: https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
+
+Turn off DNS lookup in sshd
+---------------------------
+
+If we are running on a network without a DNS server, logging in over ssh
+will be slow as the ssh daemon will attempt to do a reverse DNS lookup
+for the client. The lookup will not work and we will have to wait for a
+timeout.
+
+To disable DNS lookup in sshd:
+
+- Set `UseDNS no` in `/etc/ssh/sshd_config`
