@@ -12,8 +12,8 @@
         }
     });
 
-    // A sensor sonifier that uses the scaling synth
-    fluid.defaults("gpii.sensorPlayer.sensorSonifier", {
+    // Base sonifier definition
+    fluid.defaults("gpii.sensorPlayer.sensorSonifier.base", {
         gradeNames: ["fluid.modelComponent"],
         model: {
             sensorMax: 100,
@@ -21,8 +21,7 @@
             sensorValue: 50
         },
         components: {
-            scalingSynth: {
-                type: "gpii.sensorPlayer.scalingSynth",
+            synth: {
                 options: {
                     model: {
                         valueInformation: {
@@ -34,6 +33,79 @@
                 }
             }
         }
+    });
+
+    // A sensor sonifier that uses the scaling synth
+    fluid.defaults("gpii.sensorPlayer.sensorSonifier.scaling", {
+        gradeNames: ["gpii.sensorPlayer.sensorSonifier.base"],
+        components: {
+            synth: {
+                type: "gpii.sensorPlayer.scalingSynth"
+            }
+        }
+    });
+
+    // A pH-sensor specific sonifier
+    fluid.defaults("gpii.sensorPlayer.sensorSonifier.pH", {
+        gradeNames: ["gpii.sensorPlayer.sensorSonifier.base"],
+        components: {
+            sonifier: {
+                type: "floe.scienceLab.phSonification",
+                options: {
+                    components: {
+                        bufferLoader: {
+                            options: {
+                                bufferDefs: [
+                                    {
+                                        id: "rhodes-chord",
+                                        src: "../../../../node_modules/nexus-science-lab-synths/audio/rhodes-chord-mono.mp3"
+                                    }
+                                ]
+                            }
+                        },
+                        synth: {
+                            type: "gpii.sensorPlayer.pHSynth",
+                            options: {
+                                model: {
+                                    valueInformation: {
+                                        max: "{sensorSonifier}.model.sensorMax",
+                                        min: "{sensorSonifier}.model.sensorMin",
+                                        current: "{sensorSonifier}.model.sensorValue"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            synth: "{sonifier}.synth"
+        }
+    });
+
+    fluid.defaults("gpii.sensorPlayer.pHSynth", {
+        gradeNames: ["flock.modelSynth", "floe.scienceLab.phSynth"],
+        modelRelay: [{
+            target: "inputs.distortion.amount",
+            singleTransform: {
+                type: "gpii.sensorPlayer.transforms.polarityScale",
+                input: "{that}.model.valueInformation.current",
+                inputScaleMax: "{that}.model.valueInformation.max",
+                inputScaleMin: "{that}.model.valueInformation.min",
+                outputScaleMax: 5.0,
+                outputScaleMin: 1.0
+            }
+        },
+        {
+            target: "inputs.granulator.speed",
+            singleTransform: {
+                type: "gpii.sensorPlayer.transforms.minMaxScale",
+                input: "{that}.model.valueInformation.current",
+                inputScaleMax: "{that}.model.valueInformation.max",
+                inputScaleMin: "{that}.model.valueInformation.min",
+                outputScaleMax: 4,
+                outputScaleMin: 0.4
+            }
+        }]
     });
 
     // A model-driven synth that scales model values
@@ -116,9 +188,9 @@
                     ]
                 }
             ]
-        },
-        addToEnvironment: true
+        }
     });
+
 
     fluid.registerNamespace("gpii.sensorPlayer.transforms");
 
@@ -135,6 +207,47 @@
     gpii.sensorPlayer.transforms.minMaxScale = function (input, extraInputs) {
         var scaledValue = ((extraInputs.outputScaleMax() - extraInputs.outputScaleMin()) * (input - extraInputs.inputScaleMin()) / (extraInputs.inputScaleMax() - extraInputs.inputScaleMin())) + extraInputs.outputScaleMin();
         return scaledValue;
+    };
+
+    // Given min and max for input and output, returns a value calculated from
+    // the distance of the input value from the midpoint of input min and max
+    fluid.defaults("gpii.sensorPlayer.transforms.polarityScale", {
+        "gradeNames": [ "fluid.standardTransformFunction", "fluid.multiInputTransformFunction" ],
+        "inputVariables": {
+            "inputScaleMax": 14,
+            "inputScaleMin": 0,
+            "outputScaleMax": 5.0,
+            "outputScaleMin": 1.0
+        }
+    });
+
+    gpii.sensorPlayer.transforms.polarityScale = function (input, extraInputs) {
+        var inputScaleMax = extraInputs.inputScaleMax(),
+            inputScaleMin = extraInputs.inputScaleMin(),
+            outputScaleMax = extraInputs.outputScaleMax(),
+            outputScaleMin = extraInputs.outputScaleMin();
+
+            // Get the input midpoint
+            var inputMidpoint = (inputScaleMin + inputScaleMax) / 2;
+
+            // Get max amount of variance from the midpoint
+            var maxFromInputMidpoint = inputScaleMax - inputMidpoint;
+
+            // Get the current distance from the midpoint
+            var distanceFromInputMidpoint = Math.abs(input - inputMidpoint);
+
+            // What is the percentage of the current value from the
+            // midpoint, relative to max distance?
+            var percentageFromInputMidpoint = distanceFromInputMidpoint / maxFromInputMidpoint * 100;
+
+            // What is the max amount of variance in the output between min and max?
+            var maxOutputVariance = outputScaleMax - outputScaleMin;
+
+            // Return the percentage of the variance added to the min
+
+            var returnValue = outputScaleMin + (maxOutputVariance * percentageFromInputMidpoint / 100);
+
+            return returnValue;
     };
 
     fluid.defaults("gpii.sensorPlayer.valueDisplay", {
@@ -197,7 +310,7 @@
             },
             "onCreate.bindSynthControls": {
                 func: "gpii.sensorPlayer.sensorDisplayDebug.bindSynthControls",
-                args: ["{that}", "{sensorSynthesizer}"]
+                args: ["{that}", "{sensorPlayer}"]
             }
         },
         components: {
@@ -269,14 +382,15 @@
         }
     });
 
-    gpii.sensorPlayer.sensorDisplayDebug.bindSynthControls = function (that, sensorSynthesizer) {
+    gpii.sensorPlayer.sensorDisplayDebug.bindSynthControls = function (that, sensorSonifier) {
+        console.log(that, sensorSonifier);
         var muteControl = that.locate("muteControl");
         var midpointToneControl = that.locate("midpointToneControl");
 
         muteControl.click(function () {
             var checked = muteControl.is(":checked");
             if(checked) {
-                sensorSynthesizer.scalingSynth.set("sum.mul", {
+                sensorSonifier.synth.set("sum.mul", {
                     id: "fader",
                    ugen: "flock.ugen.line",
                    rate: "control",
@@ -286,7 +400,7 @@
                 });
             }
             else {
-                sensorSynthesizer.scalingSynth.set("sum.mul", {
+                sensorSonifier.synth.set("sum.mul", {
                     id: "fader",
                    ugen: "flock.ugen.line",
                    rate: "control",
@@ -302,23 +416,24 @@
         midpointToneControl.click(function () {
             var checked = midpointToneControl.is(":checked");
             if(checked) {
-                sensorSynthesizer.scalingSynth.applier.change("inputs.midpoint.mul", 0.12);
+                sensorSonifier.synth.applier.change("inputs.midpoint.mul", 0.12);
             }
             else {
-                sensorSynthesizer.scalingSynth.applier.change("inputs.midpoint.mul", 0);
+                sensorSonifier.synth.applier.change("inputs.midpoint.mul", 0);
             }
 
         });
     };
 
+    // Base
     fluid.defaults("gpii.sensorPlayer", {
         gradeNames: ["fluid.modelComponent"],
         components: {
             sensor: {
                 type: "gpii.sensorPlayer.sensor"
             },
-            sensorSynthesizer: {
-                type: "gpii.sensorPlayer.sensorSonifier",
+            sensorSonifier: {
+                type: "gpii.sensorPlayer.sensorSonifier.scaling",
                 options: {
                     model: {
                         sensorValue: "{sensor}.model.sensorValue",
@@ -326,6 +441,15 @@
                         sensorMin: "{sensor}.model.sensorMin"
                     }
                 }
+            }
+        }
+    });
+
+    fluid.defaults("gpii.sensorPlayer.pH", {
+        gradeNames: ["gpii.sensorPlayer"],
+        components: {
+            sensorSonifier: {
+                type: "gpii.sensorPlayer.sensorSonifier.pH"
             }
         }
     });

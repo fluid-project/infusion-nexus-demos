@@ -169,7 +169,7 @@ var fakeSensorPH = gpii.nexus.fakeSensor.pHValue();
 var fakeSensorTemperature = gpii.nexus.fakeSensor.temperature();
 
 process.on("SIGINT", function () {
-   fakeSensor.destroyNexusPeerComponent();
+    fakeSensor.destroyNexusPeerComponent();
     fakeSensorPH.destroyNexusPeerComponent();
     fakeSensorTemperature.destroyNexusPeerComponent();
 });

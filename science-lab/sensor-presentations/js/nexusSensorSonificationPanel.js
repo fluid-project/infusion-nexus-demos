@@ -6,14 +6,28 @@
     // Sonification presentation panel
     fluid.defaults("gpii.nexusSensorSonificationPanel", {
         gradeNames: ["gpii.nexusSensorPresentationPanel"],
+        perSensorPresentationGrades: {
+            "fakeSensorPH": "gpii.sensorPlayer.pH",
+            "phSensor": "gpii.sensorPlayer.pH"
+        },
+        defaultSensorPresentationGrade: "gpii.sensorPlayer",
         dynamicComponents: {
             sensorPresenter: {
-                type: "gpii.sensorPlayer",
+                type: "@expand:gpii.nexusSensorSonificationPanel.getSensorPresenterType({that}, {arguments}.0)",
                 createOnEvent: "onSensorAppearance",
                 options: "@expand:gpii.nexusSensorSonificationPanel.getSensorPresenterOptions({arguments}.0, {arguments}.1)"
             }
         }
     });
+
+    gpii.nexusSensorSonificationPanel.getSensorPresenterType = function (that, sensorId) {
+        var perSensorPresentationGrades = that.options.perSensorPresentationGrades;
+        if(perSensorPresentationGrades[sensorId]) {
+            return perSensorPresentationGrades[sensorId];
+        } else {
+            return that.options.defaultSensorPresentationGrade;
+        }
+    };
 
     // expander function; used to generate sensor sonifiers as sensors
     // are attached; dynamically configures model characteristics and
@@ -59,7 +73,7 @@
             muteControl: ".nexusc-sensorMuteControl"
         },
         strings: {
-            template: "<h2 class=\"nexusc-sensorNameDisplay\"></h2><form class=\"nexus-sensorSonifierControls\"><span class=\"nexus-sensorSonifierControls-checkboxContainer\"><label>Play Midpoint<input class=\"nexusc-midpointToneControl\" type=\"checkbox\"/><i></i></label></span><br/><span class=\"nexus-sensorSonifierControls-checkboxContainer\"><label>Mute Sensor<input class=\"nexusc-sensorMuteControl\" type=\"checkbox\"/><i></i></label></span> </form>"
+            template: "<h2 class=\"nexusc-sensorNameDisplay\"></h2><form class=\"nexus-sensorSonifierControls\"><span class=\"nexus-sensorSonifierControls-checkboxContainer nexusc-midpointToneControlContainer\"><label>Play Midpoint<input class=\"nexusc-midpointToneControl\" type=\"checkbox\"/><i></i></label></span><br/><span class=\"nexus-sensorSonifierControls-checkboxContainer nexusc-muteControlContainer\"><label>Mute Sensor<input class=\"nexusc-sensorMuteControl\" type=\"checkbox\"/><i></i></label></span> </form>"
         },
         listeners: {
             "onCreate.appendDisplayTemplate": {
@@ -72,7 +86,7 @@
             },
             "onCreate.bindSynthControls": {
                 func: "gpii.sensorPlayer.sensorDisplayDebug.bindSynthControls",
-                args: ["{that}", "{sensorSynthesizer}"]
+                args: ["{that}", "{sensorSonifier}"]
             }
         },
         components: {

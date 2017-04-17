@@ -153,7 +153,6 @@
         // Append after previous container that already exists
         } else {
             var previousSiblingContainer = nexusSensorPresentationPanel.container.find("." + attachedContainers[attachedContainerIndex-1].containerClass);
-            console.log(previousSiblingContainer);
             previousSiblingContainer.after("<div class='nexus-nexusSensorPresentationPanel-sensorDisplay " + sensorContainerClass + "'></div>");
         }
     };
@@ -162,6 +161,15 @@
     // dynamically generated container markup when a sensor is
     // removed
     gpii.nexusSensorPresentationPanel.removeSensorDisplayContainer = function (nexusSensorPresentationPanel, sensorContainerClass) {
+
+        // Remove from the attached containers index
+        var attachedContainers = nexusSensorPresentationPanel.attachedContainers;
+        fluid.remove_if(attachedContainers, function (containerInfo) {
+            console.log(containerInfo);
+            return containerInfo.containerClass === sensorContainerClass;
+        });
+        console.log(attachedContainers);
+
         console.log(nexusSensorPresentationPanel, sensorContainerClass);
         var removedSensorContainer = nexusSensorPresentationPanel.container.find("." + sensorContainerClass);
         console.log(removedSensorContainer);
