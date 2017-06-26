@@ -42,7 +42,8 @@ fluid.defaults("gpii.nexus.atlasScientificConnection", {
             funcName: "gpii.nexus.atlasScientificConnection.openCallback",
             args: [
                 "{arguments}.0", // Error
-                "{that}.events.onStarted"
+                "{that}.events.onStarted",
+                "{that}.events.onErrorOpeningConnection"
             ]
         },
         sendDeviceInformationRequest: {
@@ -55,6 +56,7 @@ fluid.defaults("gpii.nexus.atlasScientificConnection", {
 
     events: {
         onStarted: null,
+        onErrorOpeningConnection: null,
         onData: null, // Response data string
         onReading: null, // Array of numbers
         onDeviceInformation: null, // Device Information data
@@ -94,10 +96,11 @@ gpii.nexus.atlasScientificConnection.constructSerialPort = function (devicePath,
     return port;
 };
 
-gpii.nexus.atlasScientificConnection.openCallback = function (error, event) {
-    // TODO: Handle error from SerialPort open
-    if (!error) {
-        event.fire();
+gpii.nexus.atlasScientificConnection.openCallback = function (error, successEvent, errorEvent) {
+    if (error) {
+        errorEvent.fire(error);
+    } else {
+        successEvent.fire();
     }
 };
 
@@ -152,6 +155,9 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
             type: "gpii.nexus.atlasScientificConnection",
             options: {
                 devicePath: "{atlasScientificDriver}.options.devicePath",
+                events: {
+                    onErrorOpeningConnection: "{atlasScientificDriver}.events.onErrorConnectingToSensor"
+                },
                 listeners: {
                     "onStarted.sendDeviceInformationRequest": {
                         listener: "{that}.sendDeviceInformationRequest"
@@ -273,6 +279,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
     },
 
     events: {
+        onErrorConnectingToSensor: null,
         onErrorConstructingPeer: null,
         doDestroyNexusPeer: null,
         onNexusPeerComponentDestroyed: null
