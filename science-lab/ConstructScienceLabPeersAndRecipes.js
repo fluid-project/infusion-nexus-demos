@@ -263,7 +263,8 @@ fluid.promise.sequence([
         });
     },
     function () {
-        return gpii.addNexusRecipe(nexusHost, nexusPort, "sendFakeSensor", {
+        return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendFakeSensor", {
+            type: "gpii.nexus.recipe",
             reactants: {
                 fakeSensor: {
                     match: {
@@ -287,7 +288,8 @@ fluid.promise.sequence([
         });
     },
     function () {
-        return gpii.addNexusRecipe(nexusHost, nexusPort, "sendPhSensor", {
+        return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendPhSensor", {
+            type: "gpii.nexus.recipe",
             reactants: {
                 phSensor: {
                     match: {
@@ -311,7 +313,8 @@ fluid.promise.sequence([
         });
     },
     function () {
-        return gpii.addNexusRecipe(nexusHost, nexusPort, "sendEcSensor", {
+        return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendEcSensor", {
+            type: "gpii.nexus.recipe",
             reactants: {
                 ecSensor: {
                     match: {
@@ -335,7 +338,8 @@ fluid.promise.sequence([
         });
     },
     function () {
-        return gpii.addNexusRecipe(nexusHost, nexusPort, "sendRpiTempSensor1", {
+        return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendRpiTempSensor1", {
+            type: "gpii.nexus.recipe",
             reactants: {
                 tempSensor: {
                     match: {
@@ -359,7 +363,8 @@ fluid.promise.sequence([
         });
     },
     function () {
-        return gpii.addNexusRecipe(nexusHost, nexusPort, "sendRpiTempSensor2", {
+        return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendRpiTempSensor2", {
+            type: "gpii.nexus.recipe",
             reactants: {
                 tempSensor: {
                     match: {

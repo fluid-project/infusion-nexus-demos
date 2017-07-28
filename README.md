@@ -26,7 +26,18 @@ information.
 
 ### 1. Run the Nexus
 
-Run the Nexus.
+For the Music demo, the base Nexus may be used. It can be found at:
+
+- https://github.com/GPII/nexus
+
+For the Science lab demo, a Co-Occurrence Engine enabled Nexus is
+required. To run such a Nexus, clone the following repository:
+
+- https://github.com/simonbates/co-occurrence-engine
+
+And run:
+
+    > node nexusWithCoOccurrenceEngine.js
 
 ### 2. Serve and visit the demo web pages
 
