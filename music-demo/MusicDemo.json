@@ -1,0 +1,280 @@
+{
+    "components": {
+        "nexus": {
+            "type": "fluid.modelComponent"
+        },
+        "nexus.asterics": {
+            "type": "fluid.modelComponent",
+            "model": {
+                "connector": {
+                    "inputs": {
+                        "in1d": 0,
+                        "in2d": 0,
+                        "in3d": 0,
+                        "in4d": 0,
+                        "in5s": "",
+                        "in6s": "",
+                        "in7s": "",
+                        "in8s": ""
+                    },
+                    "outputs": {
+                        "out1d": 0,
+                        "out2d": 0,
+                        "out3d": 0,
+                        "out4d": 0,
+                        "out5s": "",
+                        "out6s": "",
+                        "out7s": "",
+                        "out8s": ""
+                    }
+                }
+            },
+            "modelRelay": [
+                {
+                    "source": "{that}.model.connector.inputs.in3d",
+                    "target": "derived.inputs.joystickXScaled",
+                    "singleTransform": {
+                        "type": "fluid.transforms.linearScale",
+                        "factor": 0.0625
+                    }
+                },
+                {
+                    "source": "{that}.model.derived.inputs.joystickXScaled",
+                    "target": "derived.inputs.joystickXQuantized",
+                    "singleTransform": {
+                        "type": "Math.floor"
+                    }
+                }
+            ]
+        },
+        "nexus.bonang": {
+            "type": "fluid.modelComponent"
+        },
+        "nexus.bonang.control": {
+            "type": "fluid.modelComponent",
+            "model": {
+                "activeNote": -1
+            }
+        },
+        "nexus.bonang.zoneController": {
+            "type": "fluid.modelComponent",
+            "model": {
+                "activeZoneIdx": -1
+            }
+        },
+        "nexus.bonang.pianoController": {
+            "type": "fluid.modelComponent",
+            "model": {
+                "activeNote": -1
+            }
+        },
+        "nexus.sensors": {
+            "type": "fluid.modelComponent",
+            "model": {
+                "orientation": {}
+            },
+            "modelRelay": {
+                "source": "{that}.model.orientation.gamma",
+                "target": "orientation.gammaAbs",
+                "singleTransform": {
+                    "type": "Math.abs"
+                }
+            }
+        },
+        "nexus.bonang.synth": {
+            "type": "fluid.modelComponent",
+            "modelRelay": [
+                {
+                    "source": "{control}.model.activeNote",
+                    "target": "controls.activeNote",
+                    "singleTransform": {
+                        "type": "fluid.transforms.identity"
+                    },
+                    "forward": "always",
+                    "backward": "never"
+                },
+                {
+                    "source": "{pianoController}.model.activeNote",
+                    "target": "controls.activeNote",
+                    "singleTransform": {
+                        "type": "fluid.transforms.identity"
+                    },
+                    "forward": "always",
+                    "backward": "never"
+                },
+                {
+                    "source": "{zoneController}.model.activeZoneIdx",
+                    "target": "controls.activeNote",
+                    "singleTransform": {
+                        "type": "fluid.transforms.valueMapper",
+                        "defaultInputPath": "",
+                        "match": [
+                            {
+                                "inputValue": -1,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 0,
+                                "outputValue": 60
+                            },
+                            {
+                                "inputValue": 1,
+                                "outputValue": 62
+                            },
+                            {
+                                "inputValue": 2,
+                                "outputValue": 64
+                            },
+                            {
+                                "inputValue": 3,
+                                "outputValue": 67
+                            },
+                            {
+                                "inputValue": 4,
+                                "outputValue": 69
+                            },
+                            {
+                                "inputValue": 5,
+                                "outputValue": 72
+                            },
+                            {
+                                "inputValue": 6,
+                                "outputValue": 74
+                            },
+                            {
+                                "inputValue": 7,
+                                "outputValue": 76
+                            },
+                            {
+                                "inputValue": 8,
+                                "outputValue": 79
+                            },
+                            {
+                                "inputValue": 9,
+                                "outputValue": 81
+                            },
+                            {
+                                "inputValue": 10,
+                                "outputValue": 84
+                            },
+                            {
+                                "inputValue": 11,
+                                "outputValue": 86
+                            },
+                            {
+                                "inputValue": 12,
+                                "outputValue": 88
+                            },
+                            {
+                                "inputValue": 13,
+                                "outputValue": 91
+                            },
+                            {
+                                "inputValue": 14,
+                                "outputValue": 93
+                            }
+                        ]
+                    },
+                    "forward": "always",
+                    "backward": "never"
+                },
+                {
+                    "source": "{asterics}.model.derived.inputs.joystickXQuantized",
+                    "target": "controls.activeNote",
+                    "singleTransform": {
+                        "type": "fluid.transforms.valueMapper",
+                        "defaultInputPath": "",
+                        "match": [
+                            {
+                                "inputValue": 0,
+                                "outputValue": 72
+                            },
+                            {
+                                "inputValue": 1,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 2,
+                                "outputValue": 74
+                            },
+                            {
+                                "inputValue": 3,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 4,
+                                "outputValue": 76
+                            },
+                            {
+                                "inputValue": 5,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 6,
+                                "outputValue": 77
+                            },
+                            {
+                                "inputValue": 7,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 8,
+                                "outputValue": 79
+                            },
+                            {
+                                "inputValue": 9,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 10,
+                                "outputValue": 81
+                            },
+                            {
+                                "inputValue": 11,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 12,
+                                "outputValue": 82
+                            },
+                            {
+                                "inputValue": 13,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 14,
+                                "outputValue": 84
+                            },
+                            {
+                                "inputValue": 15,
+                                "outputValue": -1
+                            },
+                            {
+                                "inputValue": 16,
+                                "outputValue": 86
+                            }
+                        ]
+                    },
+                    "forward": "liveOnly",
+                    "backward": "never"
+                },
+                {
+                    "source": "{sensors}.model.orientation.gammaAbs",
+                    "target": "controls.tremoloFreq",
+                    "singleTransform": {
+                        "type": "fluid.transforms.linearScale",
+                        "factor": 0.2
+                    },
+                    "forward": "always",
+                    "backward": "never"
+                }
+            ]
+        },
+        "nexus.brailleDisplay": {
+            "type": "fluid.modelComponent",
+            "model": {
+                "displayText": ""
+            }
+        }
+    }
+}
