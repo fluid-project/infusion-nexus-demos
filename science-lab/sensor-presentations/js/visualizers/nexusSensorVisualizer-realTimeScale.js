@@ -16,12 +16,6 @@
                     },
                     indicatorOptions: {
                         startingValue: "{realTimeScale}.sensor.model.sensorValue"
-                    },
-                    modelListeners: {
-                        "{realTimeScale}.sensor.model.sensorValue": {
-                            funcName: "gpii.nexusSensorVisualizer.realTimeScale.visualizer.updateVisualization",
-                            args: ["{that}", "{change}"]
-                        }
                     }
                 }
             }
@@ -29,7 +23,7 @@
     });
 
     fluid.defaults("gpii.nexusSensorVisualizer.realTimeScale.visualizer", {
-        gradeNames: ["floe.svgDrawingArea"],
+        gradeNames: ["gpii.nexusVisualizerBase"],
         model: {
             svgTitle: "An animated real-time scale.",
             svgDescription: "An animated real-time scale."
@@ -51,24 +45,13 @@
         indicatorOptions: {
             startingValue: 7
         },
-        listeners: {
-            "onCreate.prependSensorTitle": {
-                "this": "{that}.container",
-                method: "prepend",
-                args: {
-                    expander: {
-                        funcName: "fluid.stringTemplate",
-                        args: ["<h2>%description</h2>", "{sensor}.model"]
-                    }
-                }
-            },
-            "onCreate.createBaseSVGDrawingArea": {
-                func: "{that}.createBaseSVGDrawingArea"
-            },
-            "onCreate.createRealTimeVisualizer": {
+        invokers: {
+            "createVisualizer": {
                 funcName: "gpii.nexusSensorVisualizer.realTimeScale.visualizer.createRealTimeVisualizer",
-                args: ["{that}"],
-                priority: "after:createBaseSVGDrawingArea"
+                args: ["{that}"]
+            },
+            "updateVisualizer": {
+                funcName: "gpii.nexusSensorVisualizer.realTimeScale.visualizer.updateVisualization"
             }
         }
     });
@@ -128,9 +111,11 @@
         var h = visualizer.options.svgOptions.height,
             padding = visualizer.options.scaleOptions.padding;
 
+            var transitionDuration = visualizer.options.visualizerOptions.transitionDuration;
+
             visualizer.sensorValueIndicator
             .transition()
-            .duration(1000)
+            .duration(transitionDuration)
             .attr({
                 "height": function() {
                     return (h-padding) - visualizer.yScale(change.value);
@@ -138,7 +123,10 @@
                 "y": function() {
                   return visualizer.yScale(change.value);
                 }
-                });
+                })
+            .each("end", function() {
+                visualizer.events.onUpdateCompleted.fire();
+            });
 
     };
 
