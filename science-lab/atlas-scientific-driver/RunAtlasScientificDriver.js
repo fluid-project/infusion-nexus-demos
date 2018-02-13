@@ -30,6 +30,10 @@ var driver = gpii.nexus.atlasScientificDriver({
     nexusHost: nexusHost,
     nexusPort: nexusPort,
     listeners: {
+        "onErrorConnectingToSensor.exitProcess": {
+            funcName: "gpii.nexus.atlasScientificDriver.logErrorAndExit",
+            args: ["{arguments}.0"]
+        },
         "onErrorConstructingPeer.exitProcess": {
             funcName: "gpii.nexus.atlasScientificDriver.logErrorAndExit",
             args: ["{arguments}.0"]

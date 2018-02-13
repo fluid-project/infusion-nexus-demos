@@ -104,8 +104,8 @@ Create a systemd service at /etc/systemd/system/nexus_sense_hat_driver.service:
 
     [Unit]
     Description=Nexus Sense HAT driver
-    Requires=network-online.target avahi-daemon.service
-    After=network-online.target avahi-daemon.service
+    Requires=network-online.target avahi-daemon.service dbus.service
+    After=network-online.target avahi-daemon.service dbus.service
 
     [Service]
     WorkingDirectory=/home/pi/nexus-demos/science-lab/rpi-sense-hat-driver
