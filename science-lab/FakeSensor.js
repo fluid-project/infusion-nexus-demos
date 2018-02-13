@@ -29,12 +29,12 @@ fluid.defaults("gpii.nexus.fakeSensor", {
         }
     },
     listeners: {
-        "onPeerDestroyed.exitProcess": {
-            funcName: "gpii.nexus.fakeSensor.exitProcess"
-        },
         "onErrorConstructingPeer.exitProcess": {
             funcName: "gpii.nexus.fakeSensor.logErrorAndExit",
             args: ["{arguments}.0"]
+        },
+        "onPeerDestroyed.exitProcess": {
+            funcName: "gpii.nexus.fakeSensor.exitProcess"
         }
     }
 });
@@ -58,7 +58,7 @@ fluid.defaults("gpii.nexus.fakeSensor.sinValue", {
             value: 0
         }
     },
-        invokers: {
+    invokers: {
         "getFakeSensorValue": {
             "funcName": "gpii.nexus.fakeSensor.getFakeSensorValueSin",
             "args": ["{that}"]
@@ -85,7 +85,7 @@ fluid.defaults("gpii.nexus.fakeSensor.pHValue", {
             value: 7
         }
     },
-        invokers: {
+    invokers: {
         "getFakeSensorValue": {
             "funcName": "gpii.nexus.fakeSensor.getFakeSensorValuePH"
         }
@@ -112,12 +112,13 @@ fluid.defaults("gpii.nexus.fakeSensor.temperature", {
             value: 15
         }
     },
-        invokers: {
+    invokers: {
         "getFakeSensorValue": {
             "funcName": "gpii.nexus.fakeSensor.getFakeSensorValueTemperature"
         }
     }
 });
+
 gpii.nexus.fakeSensor.logErrorAndExit = function (error) {
     console.log(error.message);
     process.exit();
