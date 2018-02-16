@@ -26,6 +26,32 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
+            "gpii.nexus.fakeSensorPH",
+            {
+                gradeNames: [ "fluid.modelComponent" ],
+                model: {
+                    sensorData: { }
+                }
+            }
+        );
+    },
+    function () {
+        return gpii.writeNexusDefaults(
+            nexusHost,
+            nexusPort,
+            "gpii.nexus.fakeSensorTemperature",
+            {
+                gradeNames: [ "fluid.modelComponent" ],
+                model: {
+                    sensorData: { }
+                }
+            }
+        );
+    },
+    function () {
+        return gpii.writeNexusDefaults(
+            nexusHost,
+            nexusPort,
             "gpii.nexus.atlasScientificDriver.phSensor",
             {
                 gradeNames: [ "fluid.modelComponent" ],
@@ -116,6 +142,74 @@ fluid.promise.sequence([
                     "onDestroy.removeFakeSensor": {
                         listener: "{collector}.applier.change",
                         args: [ "sensors.fakeSensor", null, "DELETE" ]
+                    }
+                }
+            }
+        );
+    },
+    function () {
+        return gpii.writeNexusDefaults(
+            nexusHost,
+            nexusPort,
+            "gpii.nexus.scienceLab.sendfakeSensorPH",
+            {
+                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                componentPaths: {
+                    fakeSensorPH: null,
+                    collector: null
+                },
+                components: {
+                    fakeSensorPH: "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.fakeSensorPH)",
+                    collector: "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.collector)"
+                },
+                modelRelay: {
+                    source: "{fakeSensorPH}.model.sensorData",
+                    target: "{collector}.model.sensors.fakeSensorPH",
+                    forward: {
+                        excludeSource: "init"
+                    },
+                    singleTransform: {
+                        type: "fluid.identity"
+                    }
+                },
+                listeners: {
+                    "onDestroy.removefakeSensorPH": {
+                        listener: "{collector}.applier.change",
+                        args: [ "sensors.fakeSensorPH", null, "DELETE" ]
+                    }
+                }
+            }
+        );
+    },
+    function () {
+        return gpii.writeNexusDefaults(
+            nexusHost,
+            nexusPort,
+            "gpii.nexus.scienceLab.sendfakeSensorTemperature",
+            {
+                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                componentPaths: {
+                    fakeSensorTemperature: null,
+                    collector: null
+                },
+                components: {
+                    fakeSensorTemperature: "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.fakeSensorTemperature)",
+                    collector: "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.collector)"
+                },
+                modelRelay: {
+                    source: "{fakeSensorTemperature}.model.sensorData",
+                    target: "{collector}.model.sensors.fakeSensorTemperature",
+                    forward: {
+                        excludeSource: "init"
+                    },
+                    singleTransform: {
+                        type: "fluid.identity"
+                    }
+                },
+                listeners: {
+                    "onDestroy.removefakeSensorTemperature": {
+                        listener: "{collector}.applier.change",
+                        args: [ "sensors.fakeSensorTemperature", null, "DELETE" ]
                     }
                 }
             }
@@ -287,6 +381,56 @@ fluid.promise.sequence([
             }
         });
     },
+    function () {
+        return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendfakeSensorPH", {
+            type: "gpii.nexus.recipe",
+            reactants: {
+                fakeSensorPH: {
+                    match: {
+                        type: "gradeMatcher",
+                        gradeName: "gpii.nexus.fakeSensorPH"
+                    }
+                },
+                collector: {
+                    match: {
+                        type: "gradeMatcher",
+                        gradeName: "gpii.nexus.scienceLab.collector"
+                    }
+                }
+            },
+            product: {
+                path: "sendfakeSensorPH",
+                options: {
+                    type: "gpii.nexus.scienceLab.sendfakeSensorPH"
+                }
+            }
+        });
+    },
+    function () {
+        return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendfakeSensorTemperature", {
+            type: "gpii.nexus.recipe",
+            reactants: {
+                fakeSensorTemperature: {
+                    match: {
+                        type: "gradeMatcher",
+                        gradeName: "gpii.nexus.fakeSensorTemperature"
+                    }
+                },
+                collector: {
+                    match: {
+                        type: "gradeMatcher",
+                        gradeName: "gpii.nexus.scienceLab.collector"
+                    }
+                }
+            },
+            product: {
+                path: "sendfakeSensorTemperature",
+                options: {
+                    type: "gpii.nexus.scienceLab.sendfakeSensorTemperature"
+                }
+            }
+        });
+    },    
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendPhSensor", {
             type: "gpii.nexus.recipe",

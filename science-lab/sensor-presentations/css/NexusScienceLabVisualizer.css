@@ -1,0 +1,37 @@
+.nexus-nexusSensorPresentationPanel-sensorDisplay svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* line chart styles */
+.floe-ca-lineChart-y-axis line {
+  stroke: black;
+  opacity: 0.2;
+}
+
+.floe-ca-lineChart-y-axis text, .floec-ca-lineChart-x-axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.floe-ca-lineChart-chartLine {
+    stroke-width: 3;
+}
+
+.nexus-nexusSensorPresentationPanel-sensorDisplay .tick line {
+    stroke-width: 1;
+    stroke: black;
+}
+
+.nexus-nexusSensorPresentationPanel-sensorDisplay .domain {
+    display: none;
+}
+
+.gpiic-visualizer-controls {
+    text-align: center;
+    padding-left: 8%;
+}
+
+.gpiic-visualizer-controls label {
+    font-size: 125%;
+}
