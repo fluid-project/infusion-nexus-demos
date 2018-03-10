@@ -1,0 +1,269 @@
+{
+    "defaults": {
+        "gpii.nexus.rpiSenseHatDriver.tempSensor1": {
+            "gradeNames": [
+                "fluid.modelComponent"
+            ],
+            "model": {
+                "sensorData": {}
+            }
+        },
+        "gpii.nexus.rpiSenseHatDriver.tempSensor2": {
+            "gradeNames": [
+                "fluid.modelComponent"
+            ],
+            "model": {
+                "sensorData": {}
+            }
+        },
+        "gpii.nexus.scienceLab.collector": {
+            "gradeNames": [
+                "fluid.modelComponent"
+            ],
+            "model": {
+                "sensors": {}
+            }
+        },
+        "gpii.nexus.scienceLab.sendRpiTempSensor1": {
+            "gradeNames": [
+                "gpii.nexus.recipeProduct"
+            ],
+            "componentPaths": {
+                "tempSensor": null,
+                "collector": null
+            },
+            "components": {
+                "tempSensor": "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.tempSensor)",
+                "collector": "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.collector)"
+            },
+            "modelRelay": {
+                "source": "{tempSensor}.model.sensorData",
+                "target": "{collector}.model.sensors.rpiTempSensor1",
+                "forward": {
+                    "excludeSource": "init"
+                },
+                "singleTransform": {
+                    "type": "fluid.identity"
+                }
+            },
+            "listeners": {
+                "onDestroy.removeRpiTempSensor1": {
+                    "listener": "{collector}.applier.change",
+                    "args": [
+                        "sensors.rpiTempSensor1",
+                        null,
+                        "DELETE"
+                    ]
+                }
+            }
+        },
+        "gpii.nexus.scienceLab.sendRpiTempSensor2": {
+            "gradeNames": [
+                "gpii.nexus.recipeProduct"
+            ],
+            "componentPaths": {
+                "tempSensor": null,
+                "collector": null
+            },
+            "components": {
+                "tempSensor": "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.tempSensor)",
+                "collector": "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.collector)"
+            },
+            "modelRelay": {
+                "source": "{tempSensor}.model.sensorData",
+                "target": "{collector}.model.sensors.rpiTempSensor2",
+                "forward": {
+                    "excludeSource": "init"
+                },
+                "singleTransform": {
+                    "type": "fluid.identity"
+                }
+            },
+            "listeners": {
+                "onDestroy.removeRpiTempSensor2": {
+                    "listener": "{collector}.applier.change",
+                    "args": [
+                        "sensors.rpiTempSensor2",
+                        null,
+                        "DELETE"
+                    ]
+                }
+            }
+        },
+        "gpii.nexus.scienceLab.calculateTempDiff": {
+            "gradeNames": [
+                "gpii.nexus.recipeProduct"
+            ],
+            "componentPaths": {
+                "tempSensor1": null,
+                "temSensor2": null,
+                "collector": null
+            },
+            "components": {
+                "tempSensor1": "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.tempSensor1)",
+                "tempSensor2": "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.tempSensor2)",
+                "collector": "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.collector)"
+            },
+            "model": {
+                "sensors": {
+                    "tempSensor1Val": 0,
+                    "tempSensor2Val": 0
+                },
+                "tempDiff": {
+                    "name": "Temperature Difference",
+                    "units": "C",
+                    "rangeMin": 0,
+                    "rangeMax": 10,
+                    "value": 0
+                }
+            },
+            "modelRelay": [
+                {
+                    "source": "{tempSensor1}.model.sensorData.value",
+                    "target": "sensors.tempSensor1Val",
+                    "forward": {
+                        "excludeSource": "init"
+                    },
+                    "singleTransform": {
+                        "type": "fluid.identity"
+                    }
+                },
+                {
+                    "source": "{tempSensor2}.model.sensorData.value",
+                    "target": "sensors.tempSensor2Val",
+                    "forward": {
+                        "excludeSource": "init"
+                    },
+                    "singleTransform": {
+                        "type": "fluid.identity"
+                    }
+                },
+                {
+                    "source": "tempDiff",
+                    "target": "{collector}.model.sensors.tempDiff",
+                    "forward": {
+                        "excludeSource": "init"
+                    },
+                    "singleTransform": {
+                        "type": "fluid.identity"
+                    }
+                },
+                {
+                    "source": "sensors",
+                    "target": "tempDiff",
+                    "transform": {
+                        "value": {
+                            "transform": {
+                                "type": "Math.abs",
+                                "input": {
+                                    "transform": {
+                                        "type": "fluid.transforms.binaryOp",
+                                        "leftPath": "tempSensor1Val",
+                                        "rightPath": "tempSensor2Val",
+                                        "operator": "-"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "forward": {
+                        "excludeSource": "init"
+                    },
+                    "backward": {
+                        "excludeSource": "*"
+                    }
+                }
+            ],
+            "listeners": {
+                "onDestroy.removeRpiTempSensor1": {
+                    "listener": "{collector}.applier.change",
+                    "args": [
+                        "sensors.tempDiff",
+                        null,
+                        "DELETE"
+                    ]
+                }
+            }
+        }
+    },
+    "components": {
+        "scienceLabCollector": {
+            "type": "gpii.nexus.scienceLab.collector"
+        },
+        "recipes.sendRpiTempSensor1": {
+            "type": "gpii.nexus.recipe",
+            "reactants": {
+                "tempSensor": {
+                    "match": {
+                        "type": "gradeMatcher",
+                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor1"
+                    }
+                },
+                "collector": {
+                    "match": {
+                        "type": "gradeMatcher",
+                        "gradeName": "gpii.nexus.scienceLab.collector"
+                    }
+                }
+            },
+            "product": {
+                "path": "sendRpiTempSensor1",
+                "options": {
+                    "type": "gpii.nexus.scienceLab.sendRpiTempSensor1"
+                }
+            }
+        },
+        "recipes.sendRpiTempSensor2": {
+            "type": "gpii.nexus.recipe",
+            "reactants": {
+                "tempSensor": {
+                    "match": {
+                        "type": "gradeMatcher",
+                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor2"
+                    }
+                },
+                "collector": {
+                    "match": {
+                        "type": "gradeMatcher",
+                        "gradeName": "gpii.nexus.scienceLab.collector"
+                    }
+                }
+            },
+            "product": {
+                "path": "sendRpiTempSensor2",
+                "options": {
+                    "type": "gpii.nexus.scienceLab.sendRpiTempSensor2"
+                }
+            }
+        },
+        "recipes.calculateTempDiff": {
+            "type": "gpii.nexus.recipe",
+            "reactants": {
+                "tempSensor1": {
+                    "match": {
+                        "type": "gradeMatcher",
+                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor1"
+                    }
+                },
+                "tempSensor2": {
+                    "match": {
+                        "type": "gradeMatcher",
+                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor2"
+                    }
+                },
+                "collector": {
+                    "match": {
+                        "type": "gradeMatcher",
+                        "gradeName": "gpii.nexus.scienceLab.collector"
+                    }
+                }
+            },
+            "product": {
+                "path": "calculateTempDiff",
+                "options": {
+                    "type": "gpii.nexus.scienceLab.calculateTempDiff"
+                }
+            }
+        }
+    }
+}
