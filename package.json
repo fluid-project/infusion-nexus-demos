@@ -14,15 +14,17 @@
         "grunt-contrib-jshint": "1.0.0",
         "grunt-jsonlint": "1.0.7",
         "infusion": "3.0.0-dev.20170727T201856Z.8c48d077a",
-        "nexus-client": "simonbates/nexus-client",
+        "gpii-nexus-client": "simonbates/nexus-client",
         "nexus-science-lab-synths": "waharnum/nexus-science-lab-synths",
         "node-static": "0.7.10",
-        "nodeimu": "2.1.9",
         "p5": "0.4.24",
         "qwerty-hancock": "0.5.1",
         "sensorapijs": "simonbates/p4a-sensorAPI",
         "serialport": "4.0.7",
         "chartAuthoring": "waharnum/chartAuthoring#GPII-2358"
+    },
+    "optionalDependencies": {
+        "nodeimu": "2.1.9"
     },
     "private": true
 }
