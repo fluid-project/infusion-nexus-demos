@@ -1,9 +1,8 @@
 "use strict";
 
-var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii");
+var fluid = require("infusion");
 
-require("gpii-nexus-client");
+require("infusion-nexus-client");
 require("./AtlasScientificDriver.js");
 
 var program = require("commander");
@@ -20,22 +19,22 @@ if (program.device) {
     devicePath = program.device;
 }
 
-gpii.nexus.atlasScientificDriver.logErrorAndExit = function (error) {
+fluid.nexus.atlasScientificDriver.logErrorAndExit = function (error) {
     console.log(error.message);
     process.exit();
 };
 
-var driver = gpii.nexus.atlasScientificDriver({
+var driver = fluid.nexus.atlasScientificDriver({
     devicePath: devicePath,
     nexusHost: nexusHost,
     nexusPort: nexusPort,
     listeners: {
         "onErrorConnectingToSensor.exitProcess": {
-            funcName: "gpii.nexus.atlasScientificDriver.logErrorAndExit",
+            funcName: "fluid.nexus.atlasScientificDriver.logErrorAndExit",
             args: ["{arguments}.0"]
         },
         "onErrorConstructingPeer.exitProcess": {
-            funcName: "gpii.nexus.atlasScientificDriver.logErrorAndExit",
+            funcName: "fluid.nexus.atlasScientificDriver.logErrorAndExit",
             args: ["{arguments}.0"]
         },
         "onNexusPeerComponentDestroyed.exitProcess": {

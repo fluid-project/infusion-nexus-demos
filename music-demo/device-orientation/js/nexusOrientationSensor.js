@@ -3,10 +3,10 @@
 (function () {
     "use strict";
 
-    fluid.defaults("gpii.nexusOrientationSensor", {
+    fluid.defaults("fluid.nexusOrientationSensor", {
         gradeNames: ["gpii.nexusWebSocketBoundComponent", "fluid.viewComponent"],
         selectors: {
-            displayOrientationValues: ".gpiic-display-orientation-values"
+            displayOrientationValues: ".fluidc-display-orientation-values"
         },
         members: {
             nexusHost: "localhost", // Set to Nexus host
@@ -22,13 +22,13 @@
         },
         modelListeners: {
             orientation: {
-                funcName: "gpii.nexusOrientationSensor.displayValues",
+                funcName: "fluid.nexusOrientationSensor.displayValues",
                 args: ["{change}.value", "{that}.dom.displayOrientationValues"]
             }
         },
         invokers: {
             handleSensorEvent: {
-                funcName: "gpii.nexusOrientationSensor.handleSensorEvent",
+                funcName: "fluid.nexusOrientationSensor.handleSensorEvent",
                 args: [
                     "{that}",
                     "{that}.applier",
@@ -39,13 +39,13 @@
         },
         listeners: {
             "onCreate.loadSensorDriver": {
-                funcName: "gpii.nexusOrientationSensor.loadSensorDriver",
+                funcName: "fluid.nexusOrientationSensor.loadSensorDriver",
                 args: ["{that}.handleSensorEvent"]
             }
         }
     });
 
-    gpii.nexusOrientationSensor.loadSensorDriver = function (eventHandler) {
+    fluid.nexusOrientationSensor.loadSensorDriver = function (eventHandler) {
         var app = new SensorAPI();
         app.loadDriver("../../node_modules/sensorapijs/driver/deviceOrientation.js");
         app.onDeviceAdded(function(device) {
@@ -53,7 +53,7 @@
         });
     };
 
-    gpii.nexusOrientationSensor.handleSensorEvent = function (that, applier, modelPath, eventData) {
+    fluid.nexusOrientationSensor.handleSensorEvent = function (that, applier, modelPath, eventData) {
         var now = Date.now();
         if (now > that.lastUpdated + that.minimumUpdatePeriodMs) {
             that.lastUpdated = now;
@@ -67,7 +67,7 @@
         }
     };
 
-    gpii.nexusOrientationSensor.displayValues = function (data, elem) {
+    fluid.nexusOrientationSensor.displayValues = function (data, elem) {
         elem.text(JSON.stringify(data));
     };
 

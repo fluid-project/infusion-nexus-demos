@@ -1,29 +1,27 @@
 (function () {
     "use strict";
 
-    var gpii = fluid.registerNamespace("gpii");
-
     // Sonification presentation panel
-    fluid.defaults("gpii.nexusSensorSonificationPanel", {
-        gradeNames: ["gpii.nexusSensorPresentationPanel"],
+    fluid.defaults("fluid.nexusSensorSonificationPanel", {
+        gradeNames: ["fluid.nexusSensorPresentationPanel"],
         perSensorPresentationGrades: {
-            "fakeSensorPH": "gpii.sensorPlayer.pH",
-            "phSensor": "gpii.sensorPlayer.pH"
+            "fakeSensorPH": "fluid.sensorPlayer.pH",
+            "phSensor": "fluid.sensorPlayer.pH"
         },
         dynamicComponentContainerOptions: {
             // fluid.stringTemplate
             containerIndividualClassTemplate: "nexus-nexusSensorSonificationPanel-sensorDisplay-%sensorId"
         },
-        defaultSensorPresentationGrade: "gpii.sensorPlayer",
+        defaultSensorPresentationGrade: "fluid.sensorPlayer",
         invokers: {
             "generatePresenterOptionsBlock": {
-                funcName: "gpii.nexusSensorSonificationPanel.getSensorPresenterOptionsBlock",
+                funcName: "fluid.nexusSensorSonificationPanel.getSensorPresenterOptionsBlock",
                 args: ["{arguments}.0", "{arguments}.1", "{arguments}.2"]
             }
         }
     });
 
-    gpii.nexusSensorSonificationPanel.getSensorPresenterOptionsBlock = function (sensorPresenterModelOptions, sensorPresenterListenerOptions, sensorPresenterContainerClass) {
+    fluid.nexusSensorSonificationPanel.getSensorPresenterOptionsBlock = function (sensorPresenterModelOptions, sensorPresenterListenerOptions, sensorPresenterContainerClass) {
         var optionsBlock =
         {
             events: {
@@ -37,7 +35,7 @@
                     }
                 },
                 sensorSonifierDisplay: {
-                    type: "gpii.nexusSensorSonificationPanel.sensorSonifierDisplay",
+                    type: "fluid.nexusSensorSonificationPanel.sensorSonifierDisplay",
                     container: "." + sensorPresenterContainerClass,
                     createOnEvent: "{sensorPlayer}.events.onSensorDisplayContainerAppended"
                 }
@@ -46,8 +44,8 @@
         return optionsBlock;
     };
 
-    fluid.defaults("gpii.nexusSensorSonificationPanel.sensorSonifierDisplay", {
-        gradeNames: ["gpii.nexusSensorPresentationPanel.fadeInPresenter", "fluid.viewComponent"],
+    fluid.defaults("fluid.nexusSensorSonificationPanel.sensorSonifierDisplay", {
+        gradeNames: ["fluid.nexusSensorPresentationPanel.fadeInPresenter", "fluid.viewComponent"],
         events: {
             displayTemplateReady: null
         },
@@ -69,14 +67,14 @@
                 func: "{that}.events.displayTemplateReady.fire"
             },
             "onCreate.bindSynthControls": {
-                func: "gpii.sensorPlayer.sensorDisplayDebug.bindSynthControls",
+                func: "fluid.sensorPlayer.sensorDisplayDebug.bindSynthControls",
                 args: ["{that}", "{sensorSonifier}"]
             }
         },
         components: {
             sensorNameDisplay: {
                 createOnEvent: "{sensorSonifierDisplay}.events.displayTemplateReady",
-                type: "gpii.sensorPlayer.valueDisplay",
+                type: "fluid.sensorPlayer.valueDisplay",
                 container: "{sensorSonifierDisplay}.dom.sensorNameDisplay",
                 options: {
                     model: {

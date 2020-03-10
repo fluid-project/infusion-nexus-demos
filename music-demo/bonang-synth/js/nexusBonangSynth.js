@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    fluid.defaults("gpii.nexusBonangSynth", {
+    fluid.defaults("fluid.nexusBonangSynth", {
         gradeNames: "gpii.nexusWebSocketBoundComponent",
         members: {
             nexusPeerComponentPath: "nexus.bonang.synth",
@@ -20,10 +20,10 @@
                 type: "fluid.trackerSynth.bonang",
                 options: {
                     model: {
-                        activeNote: "{gpii.nexusBonangSynth}.model.controls.activeNote",
+                        activeNote: "{fluid.nexusBonangSynth}.model.controls.activeNote",
                         inputs: {
                             tremolo: {
-                                freq: "{gpii.nexusBonangSynth}.model.controls.tremoloFreq"
+                                freq: "{fluid.nexusBonangSynth}.model.controls.tremoloFreq"
                             }
                         }
                     }

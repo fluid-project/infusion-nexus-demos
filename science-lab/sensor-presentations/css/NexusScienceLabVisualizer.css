@@ -27,11 +27,11 @@
     display: none;
 }
 
-.gpiic-visualizer-controls {
+.fluidc-visualizer-controls {
     text-align: center;
     padding-left: 8%;
 }
 
-.gpiic-visualizer-controls label {
+.fluidc-visualizer-controls label {
     font-size: 125%;
 }

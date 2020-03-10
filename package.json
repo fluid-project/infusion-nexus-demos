@@ -1,11 +1,11 @@
 {
-    "name": "gpii-nexus-demos",
+    "name": "infusion-nexus-demos",
     "version": "0.1.0",
     "license": "BSD-3-Clause",
-    "author": "GPII",
+    "author": "fluid-project",
     "repository": {
         "type": "git",
-        "url": "https://github.com/simonbates/nexus-demos.git"
+        "url": "https://github.com/fluid-project/infusion-nexus-demos.git"
     },
     "dependencies": {
         "commander": "2.9.0",
@@ -14,7 +14,7 @@
         "grunt-contrib-jshint": "1.0.0",
         "grunt-jsonlint": "1.0.7",
         "infusion": "3.0.0-dev.20170727T201856Z.8c48d077a",
-        "gpii-nexus-client": "simonbates/nexus-client",
+        "infusion-nexus-client": "fluid-project/infusion-nexus-client#f330691bb1603160e5139bb6fb783634174fea6f",
         "nexus-science-lab-synths": "waharnum/nexus-science-lab-synths",
         "node-static": "0.7.10",
         "p5": "0.4.24",

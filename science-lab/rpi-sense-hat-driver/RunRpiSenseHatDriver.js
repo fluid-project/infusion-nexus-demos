@@ -1,9 +1,8 @@
 "use strict";
 
-var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii");
+var fluid = require("infusion");
 
-require("gpii-nexus-client");
+require("infusion-nexus-client");
 require("./RpiSenseHatDriver.js");
 
 var program = require("commander");
@@ -34,22 +33,22 @@ var sensorNames = [];
 sensorNames[1] = "Temperature A";
 sensorNames[2] = "Temperature B";
 
-gpii.nexus.rpiSenseHatDriver.logErrorAndExit = function (error) {
+fluid.nexus.rpiSenseHatDriver.logErrorAndExit = function (error) {
     console.log(error.message);
     process.exit(1);
 };
 
-var driver = gpii.nexus.rpiSenseHatDriver({
+var driver = fluid.nexus.rpiSenseHatDriver({
     nexusHost: nexusHost,
     nexusPort: nexusPort,
     nexusPeerComponentPath: "rpiSenseHatTemp" + senseHatNumber,
     nexusPeerComponentOptions: {
-        type: "gpii.nexus.rpiSenseHatDriver.tempSensor" + senseHatNumber
+        type: "fluid.nexus.rpiSenseHatDriver.tempSensor" + senseHatNumber
     },
     sensorName: sensorNames[senseHatNumber],
     listeners: {
         "onErrorConstructingPeer.exitProcess": {
-            funcName: "gpii.nexus.rpiSenseHatDriver.logErrorAndExit",
+            funcName: "fluid.nexus.rpiSenseHatDriver.logErrorAndExit",
             args: ["{arguments}.0"]
         },
         "onNexusPeerComponentDestroyed.exitProcess": {

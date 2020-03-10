@@ -1,14 +1,13 @@
 (function () {
     "use strict";
 
-    var gpii = fluid.registerNamespace("gpii");
     var d3 = fluid.registerNamespace("d3");
 
-    fluid.defaults("gpii.nexusSensorVisualizer.colorScale", {
-        gradeNames: ["gpii.nexusSensorVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.colorScale", {
+        gradeNames: ["fluid.nexusSensorVisualizerBase"],
         components: {
             visualizer: {
-                type: "gpii.nexusSensorVisualizer.colorScale.visualizer",
+                type: "fluid.nexusSensorVisualizer.colorScale.visualizer",
                 options: {
                     scaleOptions: {
                         min: "{colorScale}.sensor.model.sensorMin",
@@ -23,8 +22,8 @@
     });
 
     // A generic color scale with an indicator, y-axis and labels
-    fluid.defaults("gpii.nexusSensorVisualizer.colorScale.visualizer", {
-        gradeNames: ["gpii.nexusVisualizerBase", "floe.svgDrawingArea"],
+    fluid.defaults("fluid.nexusSensorVisualizer.colorScale.visualizer", {
+        gradeNames: ["fluid.nexusVisualizerBase", "floe.svgDrawingArea"],
         model: {
             svgTitle: "An animated scale.",
             svgDescription: "An animated scale."
@@ -73,15 +72,15 @@
         },
         invokers: {
             getIndicatorColor: {
-                funcName: "gpii.nexusSensorVisualizer.colorScale.visualizer.getIndicatorColor",
+                funcName: "fluid.nexusSensorVisualizer.colorScale.visualizer.getIndicatorColor",
                 args: ["{that}", "{arguments}.0"]
             },
             createVisualizer: {
-                funcName: "gpii.nexusSensorVisualizer.colorScale.visualizer.createVisualizer",
+                funcName: "fluid.nexusSensorVisualizer.colorScale.visualizer.createVisualizer",
                 args: ["{that}"]
             },
             updateVisualizer: {
-                funcName: "gpii.nexusSensorVisualizer.colorScale.visualizer.updateVisualization"
+                funcName: "fluid.nexusSensorVisualizer.colorScale.visualizer.updateVisualization"
             }
         },
         listeners: {
@@ -98,7 +97,7 @@
         }
     });
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createYScale = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createYScale = function (that) {
 
         var h = that.options.svgOptions.height,
             padding = that.options.scaleOptions.padding,
@@ -111,7 +110,7 @@
                .range([h - padding, 0 + padding]);
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createColorScale = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createColorScale = function (that) {
         var h = that.options.svgOptions.height,
             w = that.options.svgOptions.width,
             padding = that.options.scaleOptions.padding,
@@ -159,7 +158,7 @@
 
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createColorScaleLabels = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createColorScaleLabels = function (that) {
 
         var colors = that.options.scaleOptions.colors,
             textOptions = that.options.scaleOptions.textOptions,
@@ -184,7 +183,7 @@
 
         fluid.each(colors, function(color, index) {
             svg.append("text")
-              .text(gpii.nexusSensorVisualizer.colorScale.visualizer.getColorScaleLabelText(index, textOptions, colorLabelScaleRange))
+              .text(fluid.nexusSensorVisualizer.colorScale.visualizer.getColorScaleLabelText(index, textOptions, colorLabelScaleRange))
               .attr({
                 "class": "nexusc-colorScale-colorBarLabels",
                 "text-anchor": "middle",
@@ -199,7 +198,7 @@
         });
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.getColorScaleLabelText = function (index, textOptions, colorLabelScaleRange) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.getColorScaleLabelText = function (index, textOptions, colorLabelScaleRange) {
 
         var template = textOptions.labels.template,
             valueDecimalPlaces = textOptions.labels.valueDecimalPlaces;
@@ -219,7 +218,7 @@
     };
 
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createPositionedText = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createPositionedText = function (that) {
         var positionedTextValues = that.options.scaleOptions.textOptions.positionedText,
             leftPadding = that.options.scaleOptions.leftPadding,
             w = that.options.svgOptions.width,
@@ -266,7 +265,7 @@
         });
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createIndicator = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createIndicator = function (that) {
         // Draw the PH indicator
 
         var svg = that.svg;
@@ -289,7 +288,7 @@
         });
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createGradients = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createGradients = function (that) {
         var gradientMarkup = that.options.scaleOptions.gradientMarkup;
         fluid.each(gradientMarkup, function(gradient) {
             var defs = that.svg.append("defs");
@@ -297,7 +296,7 @@
         });
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createVisualizer = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createVisualizer = function (that) {
 
         var h = that.options.svgOptions.height,
             padding = that.options.scaleOptions.padding,
@@ -307,22 +306,22 @@
 
     that.barHeight = (h - padding) / colorScaleLength;
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createYScale(that);
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createYScale(that);
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createGradients(that);
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createGradients(that);
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createYAxis(that);
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createYAxis(that);
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createColorScale(that);
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createColorScale(that);
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createColorScaleLabels(that);
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createColorScaleLabels(that);
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createPositionedText(that);
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createPositionedText(that);
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createIndicator(that);
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createIndicator(that);
  };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.updateVisualization = function (that, change) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.updateVisualization = function (that, change) {
             var newIndicatorLocation = that.yScale(change.value) - 15;
             var newIndicatorColor = that.getIndicatorColor(change.value);
             var transitionDuration = that.options.visualizerOptions.transitionDuration;
@@ -339,12 +338,12 @@
             });
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.getIndicatorColor = function (that, indicatorValue) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.getIndicatorColor = function (that, indicatorValue) {
         var valueToColorScale = that.valueToColorScale;
         return valueToColorScale(indicatorValue);
     };
 
-    gpii.nexusSensorVisualizer.colorScale.visualizer.createYAxis = function (that) {
+    fluid.nexusSensorVisualizer.colorScale.visualizer.createYAxis = function (that) {
         var leftPadding = that.options.scaleOptions.leftPadding;
 
         var yAxis = d3.svg.axis().scale(that.yScale).orient("left").innerTickSize(25);

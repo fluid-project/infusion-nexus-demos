@@ -30,7 +30,7 @@
         <script type="text/javascript" src="../../../../node_modules/flocking/src/ugens/granular.js"></script>
         <script type="text/javascript" src="../../../../node_modules/flocking/src/ugens/distortion.js"></script>
 
-        <script type="text/javascript" src="../../../../node_modules/gpii-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
+        <script type="text/javascript" src="../../../../node_modules/infusion-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
 
         <script type="text/javascript" src="../../../../node_modules/nexus-science-lab-synths/src/buffer-loader.js"></script>
         <script type="text/javascript" src="../../../../node_modules/nexus-science-lab-synths/src/ph-synth.js"></script>
@@ -50,7 +50,7 @@
             var environment = flock.init();
             environment.start();
 
-            window.nexusSensorSonificationPanel = gpii.nexusSensorSonificationPanel(".nexus-nexusSensorSonificationPanel", {
+            window.nexusSensorSonificationPanel = fluid.nexusSensorSonificationPanel(".nexus-nexusSensorSonificationPanel", {
                 members: {
                     nexusHost: window.location.hostname
                 }

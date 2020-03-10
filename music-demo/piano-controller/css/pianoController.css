@@ -8,6 +8,6 @@
     border-bottom-color: black !important;
 }
 
-#piano li.gpii-nexusPianoController-highlighted-key {
+#piano li.fluid-nexusPianoController-highlighted-key {
     border-bottom-color: rgb(255, 220, 0) !important;
 }

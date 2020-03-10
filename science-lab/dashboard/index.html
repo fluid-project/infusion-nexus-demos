@@ -16,14 +16,14 @@
         <script type="text/javascript" src="../../node_modules/infusion/src/framework/core/js/ModelTransformation.js"></script>
         <script type="text/javascript" src="../../node_modules/infusion/src/framework/core/js/ModelTransformationTransforms.js"></script>
 
-        <script type="text/javascript" src="../../node_modules/gpii-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
+        <script type="text/javascript" src="../../node_modules/infusion-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
         <script type="text/javascript" src="js/NexusScienceLabDashboard.js"></script>
     </head>
     <body>
         <h1 class="fl-nexus-science-lab-hidden">Dashboard</h1>
         <div id="dashboard" class="fl-nexus-science-lab-dashboard"></div>
         <script>
-            window.scienceLabDashboard = gpii.nexusScienceLabDashboard("#dashboard", {
+            window.scienceLabDashboard = fluid.nexusScienceLabDashboard("#dashboard", {
                 members: {
                     nexusHost: window.location.hostname
                 }

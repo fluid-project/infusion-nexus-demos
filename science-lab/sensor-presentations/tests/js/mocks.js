@@ -45,8 +45,8 @@ gpii.nexusWebSocketBoundComponentMock.registerModelListener = function () {
     return;
 };
 
-    fluid.defaults("gpii.nexusSensorPresentationPanelMock", {
-        gradeNames: ["gpii.nexusSensorPresentationPanel", "gpii.nexusWebSocketBoundComponentMock", "fluid.viewComponent"],
+    fluid.defaults("fluid.nexusSensorPresentationPanelMock", {
+        gradeNames: ["fluid.nexusSensorPresentationPanel", "gpii.nexusWebSocketBoundComponentMock", "fluid.viewComponent"],
         // Eases testing, since we don't have to pause to wait for
         // the fade-out animation before testing that the container
         // is removed
@@ -55,16 +55,16 @@ gpii.nexusWebSocketBoundComponentMock.registerModelListener = function () {
         }
     });
 
-    fluid.defaults("gpii.nexusSensorVisualizationPanelMock", {
-        gradeNames: ["gpii.nexusSensorVisualizationPanel", "gpii.nexusSensorPresentationPanelMock"],
+    fluid.defaults("fluid.nexusSensorVisualizationPanelMock", {
+        gradeNames: ["fluid.nexusSensorVisualizationPanel", "fluid.nexusSensorPresentationPanelMock"],
         dynamicComponentContainerOptions: {
             // fluid.stringTemplate
             containerIndividualClassTemplate: "nexus-nexusSensorVisualizationPanel-sensorDisplay-%sensorId"
         }
     });
 
-    fluid.defaults("gpii.nexusSensorSonificationPanelMock", {
-        gradeNames: ["gpii.nexusSensorSonificationPanel", "gpii.nexusSensorPresentationPanelMock"],
+    fluid.defaults("fluid.nexusSensorSonificationPanelMock", {
+        gradeNames: ["fluid.nexusSensorSonificationPanel", "fluid.nexusSensorPresentationPanelMock"],
         dynamicComponentContainerOptions: {
             // fluid.stringTemplate
             containerIndividualClassTemplate: "nexus-nexusSensorSonificationPanel-sensorDisplay-%sensorId"

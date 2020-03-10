@@ -20,14 +20,14 @@
         <script src="../../node_modules/flocking/src/ugens/buffer.js"></script>
 
         <script src="js/bonang-synth.js"></script>
-        <script src="../../node_modules/gpii-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
+        <script src="../../node_modules/infusion-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
         <script src="js/nexusBonangSynth.js"></script>
     </head>
     <body>
         <h1>Bonang Synth</h1>
 
         <script>
-            window.bonangSynth = gpii.nexusBonangSynth({
+            window.bonangSynth = fluid.nexusBonangSynth({
                 members: {
                     nexusHost: window.location.hostname
                 },

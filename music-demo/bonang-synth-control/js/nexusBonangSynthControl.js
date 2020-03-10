@@ -1,11 +1,11 @@
 (function () {
     "use strict";
 
-    fluid.defaults("gpii.nexusBonangSynthControl", {
+    fluid.defaults("fluid.nexusBonangSynthControl", {
         gradeNames: ["gpii.nexusWebSocketBoundComponent", "fluid.viewComponent"],
         selectors: {
-            noteInput: ".gpiic-bonang-synth-note",
-            sendButton: ".gpiic-bonang-synth-send"
+            noteInput: ".fluidc-bonang-synth-note",
+            sendButton: ".fluidc-bonang-synth-send"
         },
         members: {
             nexusPeerComponentPath: "nexus.bonang.control",
@@ -18,7 +18,7 @@
         },
         invokers: {
             sendButtonHandler: {
-                funcName: "gpii.nexusBonangSynthControl.sendButtonHandler",
+                funcName: "fluid.nexusBonangSynthControl.sendButtonHandler",
                 args: [
                     "{that}.applier",
                     "{that}.nexusBoundModelPath",
@@ -35,7 +35,7 @@
         }
     });
 
-    gpii.nexusBonangSynthControl.sendButtonHandler = function (applier, modelPath, noteInput) {
+    fluid.nexusBonangSynthControl.sendButtonHandler = function (applier, modelPath, noteInput) {
         var noteVal = fluid.parseInteger(noteInput.val());
         applier.change(modelPath, noteVal);
     };

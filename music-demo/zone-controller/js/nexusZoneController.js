@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    fluid.defaults("gpii.nexusZoneController", {
+    fluid.defaults("fluid.nexusZoneController", {
         gradeNames: ["gpii.nexusWebSocketBoundComponent", "fluid.viewComponent"],
         members: {
             nexusPeerComponentPath: "nexus.bonang.zoneController",

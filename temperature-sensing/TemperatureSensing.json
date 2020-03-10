@@ -1,6 +1,6 @@
 {
     "defaults": {
-        "gpii.nexus.rpiSenseHatDriver.tempSensor1": {
+        "fluid.nexus.rpiSenseHatDriver.tempSensor1": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -8,7 +8,7 @@
                 "sensorData": {}
             }
         },
-        "gpii.nexus.rpiSenseHatDriver.tempSensor2": {
+        "fluid.nexus.rpiSenseHatDriver.tempSensor2": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -16,7 +16,7 @@
                 "sensorData": {}
             }
         },
-        "gpii.nexus.scienceLab.collector": {
+        "fluid.nexus.scienceLab.collector": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -24,9 +24,9 @@
                 "sensors": {}
             }
         },
-        "gpii.nexus.scienceLab.sendRpiTempSensor1": {
+        "fluid.nexus.scienceLab.sendRpiTempSensor1": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "tempSensor": null,
@@ -57,9 +57,9 @@
                 }
             }
         },
-        "gpii.nexus.scienceLab.sendRpiTempSensor2": {
+        "fluid.nexus.scienceLab.sendRpiTempSensor2": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "tempSensor": null,
@@ -90,9 +90,9 @@
                 }
             }
         },
-        "gpii.nexus.scienceLab.calculateTempDiff": {
+        "fluid.nexus.scienceLab.calculateTempDiff": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "tempSensor1": null,
@@ -188,80 +188,80 @@
     },
     "components": {
         "scienceLabCollector": {
-            "type": "gpii.nexus.scienceLab.collector"
+            "type": "fluid.nexus.scienceLab.collector"
         },
         "recipes.sendRpiTempSensor1": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "tempSensor": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor1"
+                        "gradeName": "fluid.nexus.rpiSenseHatDriver.tempSensor1"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "sendRpiTempSensor1",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.sendRpiTempSensor1"
+                    "type": "fluid.nexus.scienceLab.sendRpiTempSensor1"
                 }
             }
         },
         "recipes.sendRpiTempSensor2": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "tempSensor": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor2"
+                        "gradeName": "fluid.nexus.rpiSenseHatDriver.tempSensor2"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "sendRpiTempSensor2",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.sendRpiTempSensor2"
+                    "type": "fluid.nexus.scienceLab.sendRpiTempSensor2"
                 }
             }
         },
         "recipes.calculateTempDiff": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "tempSensor1": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor1"
+                        "gradeName": "fluid.nexus.rpiSenseHatDriver.tempSensor1"
                     }
                 },
                 "tempSensor2": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor2"
+                        "gradeName": "fluid.nexus.rpiSenseHatDriver.tempSensor2"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "calculateTempDiff",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.calculateTempDiff"
+                    "type": "fluid.nexus.scienceLab.calculateTempDiff"
                 }
             }
         }

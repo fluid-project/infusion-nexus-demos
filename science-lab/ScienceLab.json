@@ -1,6 +1,6 @@
 {
     "defaults": {
-        "gpii.nexus.fakeSensor": {
+        "fluid.nexus.fakeSensor": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -8,7 +8,7 @@
                 "sensorData": {}
             }
         },
-        "gpii.nexus.atlasScientificDriver.phSensor": {
+        "fluid.nexus.atlasScientificDriver.phSensor": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -16,7 +16,7 @@
                 "sensorData": {}
             }
         },
-        "gpii.nexus.atlasScientificDriver.ecSensor": {
+        "fluid.nexus.atlasScientificDriver.ecSensor": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -24,7 +24,7 @@
                 "sensorData": {}
             }
         },
-        "gpii.nexus.rpiSenseHatDriver.tempSensor1": {
+        "fluid.nexus.rpiSenseHatDriver.tempSensor1": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -32,7 +32,7 @@
                 "sensorData": {}
             }
         },
-        "gpii.nexus.rpiSenseHatDriver.tempSensor2": {
+        "fluid.nexus.rpiSenseHatDriver.tempSensor2": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -40,7 +40,7 @@
                 "sensorData": {}
             }
         },
-        "gpii.nexus.scienceLab.collector": {
+        "fluid.nexus.scienceLab.collector": {
             "gradeNames": [
                 "fluid.modelComponent"
             ],
@@ -48,9 +48,9 @@
                 "sensors": {}
             }
         },
-        "gpii.nexus.scienceLab.sendFakeSensor": {
+        "fluid.nexus.scienceLab.sendFakeSensor": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "fakeSensor": null,
@@ -81,9 +81,9 @@
                 }
             }
         },
-        "gpii.nexus.scienceLab.sendPhSensor": {
+        "fluid.nexus.scienceLab.sendPhSensor": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "phSensor": null,
@@ -114,9 +114,9 @@
                 }
             }
         },
-        "gpii.nexus.scienceLab.sendEcSensor": {
+        "fluid.nexus.scienceLab.sendEcSensor": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "ecSensor": null,
@@ -147,9 +147,9 @@
                 }
             }
         },
-        "gpii.nexus.scienceLab.sendRpiTempSensor1": {
+        "fluid.nexus.scienceLab.sendRpiTempSensor1": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "tempSensor": null,
@@ -180,9 +180,9 @@
                 }
             }
         },
-        "gpii.nexus.scienceLab.sendRpiTempSensor2": {
+        "fluid.nexus.scienceLab.sendRpiTempSensor2": {
             "gradeNames": [
-                "gpii.nexus.recipeProduct"
+                "fluid.nexus.recipeProduct"
             ],
             "componentPaths": {
                 "tempSensor": null,
@@ -216,120 +216,120 @@
     },
     "components": {
         "scienceLabCollector": {
-            "type": "gpii.nexus.scienceLab.collector"
+            "type": "fluid.nexus.scienceLab.collector"
         },
         "recipes.sendFakeSensor": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "fakeSensor": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.fakeSensor"
+                        "gradeName": "fluid.nexus.fakeSensor"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "sendFakeSensor",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.sendFakeSensor"
+                    "type": "fluid.nexus.scienceLab.sendFakeSensor"
                 }
             }
         },
         "recipes.sendPhSensor": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "phSensor": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.atlasScientificDriver.phSensor"
+                        "gradeName": "fluid.nexus.atlasScientificDriver.phSensor"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "sendPhSensor",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.sendPhSensor"
+                    "type": "fluid.nexus.scienceLab.sendPhSensor"
                 }
             }
         },
         "recipes.sendEcSensor": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "ecSensor": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.atlasScientificDriver.ecSensor"
+                        "gradeName": "fluid.nexus.atlasScientificDriver.ecSensor"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "sendEcSensor",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.sendEcSensor"
+                    "type": "fluid.nexus.scienceLab.sendEcSensor"
                 }
             }
         },
         "recipes.sendRpiTempSensor1": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "tempSensor": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor1"
+                        "gradeName": "fluid.nexus.rpiSenseHatDriver.tempSensor1"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "sendRpiTempSensor1",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.sendRpiTempSensor1"
+                    "type": "fluid.nexus.scienceLab.sendRpiTempSensor1"
                 }
             }
         },
         "recipes.sendRpiTempSensor2": {
-            "type": "gpii.nexus.recipe",
+            "type": "fluid.nexus.recipe",
             "reactants": {
                 "tempSensor": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.rpiSenseHatDriver.tempSensor2"
+                        "gradeName": "fluid.nexus.rpiSenseHatDriver.tempSensor2"
                     }
                 },
                 "collector": {
                     "match": {
                         "type": "gradeMatcher",
-                        "gradeName": "gpii.nexus.scienceLab.collector"
+                        "gradeName": "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             "product": {
                 "path": "sendRpiTempSensor2",
                 "options": {
-                    "type": "gpii.nexus.scienceLab.sendRpiTempSensor2"
+                    "type": "fluid.nexus.scienceLab.sendRpiTempSensor2"
                 }
             }
         }

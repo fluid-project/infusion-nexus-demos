@@ -11,18 +11,18 @@
         <script type="text/javascript" src="../../node_modules/infusion/src/framework/core/js/FluidIoC.js"></script>
         <script type="text/javascript" src="../../node_modules/infusion/src/framework/core/js/DataBinding.js"></script>
         <script type="text/javascript" src="../../node_modules/infusion/src/framework/core/js/FluidView.js"></script>
-        <script type="text/javascript" src="../../node_modules/gpii-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
+        <script type="text/javascript" src="../../node_modules/infusion-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
         <script type="text/javascript" src="js/nexusOrientationSensor.js"></script>
     </head>
     <body>
         <h1>Orientation Sensor</h1>
 
-        <p id="gpiic-nexusOrientationSensor">
-            <span class="gpiic-display-orientation-values"></span>
+        <p id="fluidc-nexusOrientationSensor">
+            <span class="fluidc-display-orientation-values"></span>
         </p>
 
         <script>
-            window.nexusOrientationSensor = gpii.nexusOrientationSensor("#gpiic-nexusOrientationSensor", {
+            window.nexusOrientationSensor = fluid.nexusOrientationSensor("#fluidc-nexusOrientationSensor", {
                 members: {
                     nexusHost: window.location.hostname
                 }

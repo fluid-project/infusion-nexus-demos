@@ -13,8 +13,8 @@
             outputScaleMax: 680,
             outputScaleMin: 200,
             expectedOutputValues: {
-                "gpii.sensorPlayer.transforms.minMaxScale": 440,
-                "gpii.sensorPlayer.transforms.polarityScale": 200
+                "fluid.sensorPlayer.transforms.minMaxScale": 440,
+                "fluid.sensorPlayer.transforms.polarityScale": 200
             }
         },
         {
@@ -25,8 +25,8 @@
             outputScaleMax: 680,
             outputScaleMin: 200,
             expectedOutputValues: {
-                "gpii.sensorPlayer.transforms.minMaxScale": 680,
-                "gpii.sensorPlayer.transforms.polarityScale": 680
+                "fluid.sensorPlayer.transforms.minMaxScale": 680,
+                "fluid.sensorPlayer.transforms.polarityScale": 680
             }
         },
         {
@@ -37,8 +37,8 @@
             outputScaleMax: 680,
             outputScaleMin: 200,
             expectedOutputValues: {
-                "gpii.sensorPlayer.transforms.minMaxScale": 200,
-                "gpii.sensorPlayer.transforms.polarityScale": 680
+                "fluid.sensorPlayer.transforms.minMaxScale": 200,
+                "fluid.sensorPlayer.transforms.polarityScale": 680
             }
         },
         {
@@ -49,8 +49,8 @@
             outputScaleMax: 680,
             outputScaleMin: 200,
             expectedOutputValues: {
-                "gpii.sensorPlayer.transforms.minMaxScale": 680,
-                "gpii.sensorPlayer.transforms.polarityScale": 680
+                "fluid.sensorPlayer.transforms.minMaxScale": 680,
+                "fluid.sensorPlayer.transforms.polarityScale": 680
             }
         },
         {
@@ -61,8 +61,8 @@
             outputScaleMax: 680,
             outputScaleMin: 200,
             expectedOutputValues: {
-                "gpii.sensorPlayer.transforms.minMaxScale": 200,
-                "gpii.sensorPlayer.transforms.polarityScale": 680
+                "fluid.sensorPlayer.transforms.minMaxScale": 200,
+                "fluid.sensorPlayer.transforms.polarityScale": 680
             }
         },
         {
@@ -73,8 +73,8 @@
             outputScaleMax: 100,
             outputScaleMin: -100,
             expectedOutputValues: {
-                "gpii.sensorPlayer.transforms.minMaxScale": 0,
-                "gpii.sensorPlayer.transforms.polarityScale": -100
+                "fluid.sensorPlayer.transforms.minMaxScale": 0,
+                "fluid.sensorPlayer.transforms.polarityScale": -100
             }
         }
     ];
@@ -115,8 +115,8 @@
         });
     };
 
-    testTransforms("gpii.sensorPlayer.transforms.minMaxScale", transformTestSpecs);
+    testTransforms("fluid.sensorPlayer.transforms.minMaxScale", transformTestSpecs);
 
-    testTransforms("gpii.sensorPlayer.transforms.polarityScale", transformTestSpecs);
+    testTransforms("fluid.sensorPlayer.transforms.polarityScale", transformTestSpecs);
 
 }());
