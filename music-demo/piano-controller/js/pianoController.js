@@ -110,7 +110,7 @@
         }
     });
 
-    fluid.defaults("gpii.nexusPianoController", {
+    fluid.defaults("fluid.nexusPianoController", {
         gradeNames: ["gpii.nexusWebSocketBoundComponent", "flock.ui.modelKeyboard"],
 
         highlightKeys: [
@@ -133,7 +133,7 @@
         listeners: {
             onCreate: [
                 {
-                    funcName: "gpii.nexusPianoController.highlightKeys",
+                    funcName: "fluid.nexusPianoController.highlightKeys",
                     args: ["{that}.container", "{that}.options"],
                     priority: "last"
                 }
@@ -141,11 +141,11 @@
         },
 
         styles: {
-            highlightedKey: "gpii-nexusPianoController-highlighted-key"
+            highlightedKey: "fluid-nexusPianoController-highlighted-key"
         }
     });
 
-    gpii.nexusPianoController.highlightKeys = function (container, options) {
+    fluid.nexusPianoController.highlightKeys = function (container, options) {
         fluid.each(options.highlightKeys, function (key) {
             container.find("[id=" + key + "]").addClass(options.styles.highlightedKey);
         });

@@ -1,25 +1,23 @@
 (function () {
     "use strict";
 
-    var gpii = fluid.registerNamespace("gpii");
-
     // A specifically formatted pH color scale, based on universal
     // indicator colors, and with some positioned example text
-    fluid.defaults("gpii.nexusSensorVisualizer.pHScale", {
-        gradeNames: ["gpii.nexusSensorVisualizer.colorScale"],
+    fluid.defaults("fluid.nexusSensorVisualizer.pHScale", {
+        gradeNames: ["fluid.nexusSensorVisualizer.colorScale"],
         components: {
             visualizer: {
-                type: "gpii.nexusSensorVisualizer.pHScale.visualizer",
+                type: "fluid.nexusSensorVisualizer.pHScale.visualizer",
                 options: {
                     selectors: {
-                        "displayExamplesCheckbox": ".gpiic-visualizer-displayExamples",
+                        "displayExamplesCheckbox": ".fluidc-visualizer-displayExamples",
                         "pHScaleExamples": ".nexusc-colorScale-positionedText"
                     },
                     listeners: {
                         "onCreate.appendControls": {
                             "this": "{that}.container",
                             method: "append",
-                            args: "<form class='gpiic-visualizer-controls'><label>Show Examples <input class='gpiic-visualizer-displayExamples' type='checkbox' checked /></label></form>"
+                            args: "<form class='fluidc-visualizer-controls'><label>Show Examples <input class='fluidc-visualizer-displayExamples' type='checkbox' checked /></label></form>"
                         },
                         "onCreate.bindControls": {
                             "this": "{that}.dom.displayExamplesCheckbox",
@@ -29,7 +27,7 @@
                     },
                     invokers: {
                         toggleExamples: {
-                            funcName: "gpii.nexusSensorVisualizer.pHScale.toggleExamples",
+                            funcName: "fluid.nexusSensorVisualizer.pHScale.toggleExamples",
                             args: ["{that}"]
                         }
                     }
@@ -38,7 +36,7 @@
         }
     });
 
-    gpii.nexusSensorVisualizer.pHScale.toggleExamples = function (that) {
+    fluid.nexusSensorVisualizer.pHScale.toggleExamples = function (that) {
         var checked = that.locate("displayExamplesCheckbox").prop("checked");
         if(checked) {
             that.locate("pHScaleExamples").fadeIn();
@@ -47,8 +45,8 @@
         }
     };
 
-    fluid.defaults("gpii.nexusSensorVisualizer.pHScale.visualizer", {
-        gradeNames: ["gpii.nexusSensorVisualizer.colorScale.visualizer"],
+    fluid.defaults("fluid.nexusSensorVisualizer.pHScale.visualizer", {
+        gradeNames: ["fluid.nexusSensorVisualizer.colorScale.visualizer"],
         model: {
             svgTitle: "An animated pH scale.",
             svgDescription: "An animated ph scale."

@@ -1,11 +1,9 @@
 (function () {
     "use strict";
 
-    var gpii = fluid.registerNamespace("gpii");
-
     // TODO: Add ARIA live region markup?
 
-    fluid.defaults("gpii.nexusScienceLabDashboard", {
+    fluid.defaults("fluid.nexusScienceLabDashboard", {
         gradeNames: ["gpii.nexusWebSocketBoundComponent", "fluid.viewComponent"],
         numberLocale: "en",
         maximumFractionDigits: 2,
@@ -30,13 +28,13 @@
         },
         modelListeners: {
             sensors: {
-                funcName: "gpii.nexusScienceLabDashboard.updateDashboard",
+                funcName: "fluid.nexusScienceLabDashboard.updateDashboard",
                 args: ["{that}", "{change}.value"]
             }
         }
     });
 
-    gpii.nexusScienceLabDashboard.updateDashboard = function (that, sensors) {
+    fluid.nexusScienceLabDashboard.updateDashboard = function (that, sensors) {
 
         var sensorsArray = fluid.hashToArray(sensors, "sensor");
 
@@ -54,14 +52,14 @@
                 return a.name.localeCompare(b.name);
             });
 
-            gpii.nexusScienceLabDashboard.updateDashboardValues(
+            fluid.nexusScienceLabDashboard.updateDashboardValues(
                 that,
                 sensorsArray
             );
         }
     };
 
-    gpii.nexusScienceLabDashboard.updateDashboardValues = function (that, sortedSensors) {
+    fluid.nexusScienceLabDashboard.updateDashboardValues = function (that, sortedSensors) {
 
         var sensorsArrayIndex = 0;
 
@@ -72,8 +70,8 @@
                 var sensorOnPage = $($(sensorElem).find(that.options.selectors.sensorHeading)).text();
 
                 // Insert any new sensors
-                while (sensorOnPage.localeCompare(gpii.nexusScienceLabDashboard.buildSensorHeading(sortedSensors[sensorsArrayIndex])) === 1) {
-                    $(sensorElem).before(gpii.nexusScienceLabDashboard.buildSensorMarkup(
+                while (sensorOnPage.localeCompare(fluid.nexusScienceLabDashboard.buildSensorHeading(sortedSensors[sensorsArrayIndex])) === 1) {
+                    $(sensorElem).before(fluid.nexusScienceLabDashboard.buildSensorMarkup(
                         that.options.markup.sensor,
                         sortedSensors[sensorsArrayIndex],
                         that.options.numberLocale,
@@ -82,10 +80,10 @@
                     ++sensorsArrayIndex;
                 }
 
-                switch (sensorOnPage.localeCompare(gpii.nexusScienceLabDashboard.buildSensorHeading(sortedSensors[sensorsArrayIndex]))) {
+                switch (sensorOnPage.localeCompare(fluid.nexusScienceLabDashboard.buildSensorHeading(sortedSensors[sensorsArrayIndex]))) {
                     case 0:
                         // Existing value, update it
-                        var newValue = gpii.nexusScienceLabDashboard.buildSensorValue(
+                        var newValue = fluid.nexusScienceLabDashboard.buildSensorValue(
                             sortedSensors[sensorsArrayIndex],
                             that.options.numberLocale,
                             that.options.maximumFractionDigits
@@ -107,7 +105,7 @@
 
         // Add any remaining new sensors from the incoming data
         while (sensorsArrayIndex < sortedSensors.length) {
-            that.container.append(gpii.nexusScienceLabDashboard.buildSensorMarkup(
+            that.container.append(fluid.nexusScienceLabDashboard.buildSensorMarkup(
                 that.options.markup.sensor,
                 sortedSensors[sensorsArrayIndex],
                 that.options.numberLocale,
@@ -117,11 +115,11 @@
         }
     };
 
-    gpii.nexusScienceLabDashboard.buildSensorMarkup = function (markup, sensorData, numberLocale, maximumFractionDigits) {
+    fluid.nexusScienceLabDashboard.buildSensorMarkup = function (markup, sensorData, numberLocale, maximumFractionDigits) {
         return fluid.stringTemplate(markup,
             {
-                sensorHeading: gpii.nexusScienceLabDashboard.buildSensorHeading(sensorData),
-                sensorValue: gpii.nexusScienceLabDashboard.buildSensorValue(
+                sensorHeading: fluid.nexusScienceLabDashboard.buildSensorHeading(sensorData),
+                sensorValue: fluid.nexusScienceLabDashboard.buildSensorValue(
                     sensorData,
                     numberLocale,
                     maximumFractionDigits
@@ -130,7 +128,7 @@
         );
     };
 
-    gpii.nexusScienceLabDashboard.buildSensorHeading = function (sensorData) {
+    fluid.nexusScienceLabDashboard.buildSensorHeading = function (sensorData) {
         if (sensorData.units) {
             return fluid.stringTemplate("%sensorName (%units)", {
                 sensorName: sensorData.name,
@@ -141,7 +139,7 @@
         }
     };
 
-    gpii.nexusScienceLabDashboard.buildSensorValue = function (sensorData, numberLocale, maximumFractionDigits) {
+    fluid.nexusScienceLabDashboard.buildSensorValue = function (sensorData, numberLocale, maximumFractionDigits) {
         return sensorData.value.toLocaleString(numberLocale, {
             maximumFractionDigits: maximumFractionDigits
         });

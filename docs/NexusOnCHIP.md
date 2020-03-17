@@ -164,7 +164,7 @@ Get Nexus and Nexus Demos
 -------------------------
 
     $ git clone https://github.com/GPII/nexus.git
-    $ git clone https://github.com/simonbates/nexus-demos.git
+    $ git clone https://github.com/fluid-project/infusion-nexus-demos.git
 
 Start Nexus at boot with systemd
 --------------------------------

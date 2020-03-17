@@ -1,21 +1,20 @@
 "use strict";
 
 var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii"),
     nodeimu = require("nodeimu");
 
-fluid.defaults("gpii.nexus.rpiSenseHat", {
+fluid.defaults("fluid.nexus.rpiSenseHat", {
     gradeNames: "fluid.component",
 
     readIntervalMs: 1000,
 
     members: {
-        imu: "@expand:gpii.nexus.rpiSenseHat.constructImu()"
+        imu: "@expand:fluid.nexus.rpiSenseHat.constructImu()"
     },
 
     invokers: {
         getReading: {
-            funcName: "gpii.nexus.rpiSenseHat.getReading",
+            funcName: "fluid.nexus.rpiSenseHat.getReading",
             args: [
                 "{that}",
                 "{that}.imu",
@@ -34,11 +33,11 @@ fluid.defaults("gpii.nexus.rpiSenseHat", {
     }
 });
 
-gpii.nexus.rpiSenseHat.constructImu = function () {
+fluid.nexus.rpiSenseHat.constructImu = function () {
     return new nodeimu.IMU();
 };
 
-gpii.nexus.rpiSenseHat.getReading = function (that, imu, readIntervalMs, onReadingEvent) {
+fluid.nexus.rpiSenseHat.getReading = function (that, imu, readIntervalMs, onReadingEvent) {
     imu.getValue(function (e, data) {
         onReadingEvent.fire(data);
         setTimeout(function () {
@@ -47,20 +46,20 @@ gpii.nexus.rpiSenseHat.getReading = function (that, imu, readIntervalMs, onReadi
     });
 };
 
-fluid.defaults("gpii.nexus.rpiSenseHatDriver", {
+fluid.defaults("fluid.nexus.rpiSenseHatDriver", {
     gradeNames: "fluid.modelComponent",
 
     nexusHost: "localhost",
     nexusPort: 9081,
     nexusPeerComponentPath: "rpiSenseHatTemp",
     nexusPeerComponentOptions: {
-        type: "gpii.nexus.rpiSenseHatDriver.tempSensor"
+        type: "fluid.nexus.rpiSenseHatDriver.tempSensor"
     },
     sensorName: "Temperature",
 
     components: {
         sense: {
-            type: "gpii.nexus.rpiSenseHat",
+            type: "fluid.nexus.rpiSenseHat",
             options: {
                 listeners: {
                     "onReading.log": function (data) {
@@ -98,7 +97,7 @@ fluid.defaults("gpii.nexus.rpiSenseHatDriver", {
                 },
                 listeners: {
                     "{rpiSenseHat}.events.onReading": {
-                        listener: "gpii.nexus.rpiSenseHatDriver.updateTemp",
+                        listener: "fluid.nexus.rpiSenseHatDriver.updateTemp",
                         args: [
                             "{that}",
                             "{arguments}.0" // Sensor reading
@@ -124,6 +123,6 @@ fluid.defaults("gpii.nexus.rpiSenseHatDriver", {
 
 });
 
-gpii.nexus.rpiSenseHatDriver.updateTemp = function (nexusBinding, senseHatData) {
+fluid.nexus.rpiSenseHatDriver.updateTemp = function (nexusBinding, senseHatData) {
     nexusBinding.applier.change("sensorData.value", senseHatData.temperature);
 };

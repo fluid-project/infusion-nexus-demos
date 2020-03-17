@@ -1,21 +1,20 @@
 (function () {
     "use strict";
 
-    var gpii = fluid.registerNamespace("gpii");
     var d3 = fluid.registerNamespace("d3");
 
     // A specifically formatted heat scale,
-    fluid.defaults("gpii.nexusSensorVisualizer.temperature", {
-        gradeNames: ["gpii.nexusSensorVisualizer.colorScale"],
+    fluid.defaults("fluid.nexusSensorVisualizer.temperature", {
+        gradeNames: ["fluid.nexusSensorVisualizer.colorScale"],
         components: {
             visualizer: {
-                type: "gpii.nexusSensorVisualizer.temperature.visualizer"
+                type: "fluid.nexusSensorVisualizer.temperature.visualizer"
             }
         }
     });
 
-    fluid.defaults("gpii.nexusSensorVisualizer.temperature.visualizer", {
-        gradeNames: ["gpii.nexusSensorVisualizer.colorScale.visualizer"],
+    fluid.defaults("fluid.nexusSensorVisualizer.temperature.visualizer", {
+        gradeNames: ["fluid.nexusSensorVisualizer.colorScale.visualizer"],
         model: {
             svgTitle: "An animated heat scale.",
             svgDescription: "An animated heat scale."
@@ -37,13 +36,13 @@
         },
         invokers: {
             getIndicatorColor: {
-                funcName: "gpii.nexusSensorVisualizer.temperature.visualizer.getIndicatorColor",
+                funcName: "fluid.nexusSensorVisualizer.temperature.visualizer.getIndicatorColor",
                 args: ["{that}", "{arguments}.0"]
             }
         }
     });
 
-    gpii.nexusSensorVisualizer.temperature.visualizer.getIndicatorColor = function(that, indicatorValue) {
+    fluid.nexusSensorVisualizer.temperature.visualizer.getIndicatorColor = function(that, indicatorValue) {
         var thresholdScale = d3.scale.linear().domain([10,25,40]).range(["blue", "white", "red"]);
         return thresholdScale(indicatorValue);
     };

@@ -1,12 +1,11 @@
 (function () {
     "use strict";
-    var gpii = fluid.registerNamespace("gpii");
 
-    fluid.defaults("gpii.nexusSensorVisualizer.lineChart", {
-        gradeNames: ["gpii.nexusSensorVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.lineChart", {
+        gradeNames: ["fluid.nexusSensorVisualizerBase"],
         components: {
             visualizer: {
-                type: "gpii.nexusSensorVisualizer.lineChart.visualizer",
+                type: "fluid.nexusSensorVisualizer.lineChart.visualizer",
                 options: {
                     scaleOptions: {
                         // transform rules to apply to yScale min
@@ -32,7 +31,7 @@
         }
     });
 
-    gpii.nexusSensorVisualizer.lineChart.accumulateSensorValues = function (sensorValueAccumulator, visualizer, change) {
+    fluid.nexusSensorVisualizer.lineChart.accumulateSensorValues = function (sensorValueAccumulator, visualizer, change) {
 
         var maxValuesRetained = fluid.get(sensorValueAccumulator.model, "maxValuesRetained");
 
@@ -55,8 +54,8 @@
         visualizer.applier.change("dataSet", currentSensorValues);
     };
 
-    fluid.defaults("gpii.nexusSensorVisualizer.lineChart.visualizer", {
-        gradeNames: ["gpii.nexusSensorPresentationPanel.fadeInPresenter", "floe.chartAuthoring.lineChart.timeSeriesSingleDataSet", "gpii.nexusVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.lineChart.visualizer", {
+        gradeNames: ["fluid.nexusSensorPresentationPanel.fadeInPresenter", "floe.chartAuthoring.lineChart.timeSeriesSingleDataSet", "fluid.nexusVisualizerBase"],
         invokers: {
             transitionChartLine: {
                 funcName: "floe.chartAuthoring.lineChart.timeSeries.line.updateChartLine.defaultTransition"
@@ -66,7 +65,7 @@
                 funcName: "fluid.identity"
             },
             updateVisualizer: {
-                funcName: "gpii.nexusSensorVisualizer.lineChart.accumulateSensorValues",
+                funcName: "fluid.nexusSensorVisualizer.lineChart.accumulateSensorValues",
                 args: ["{sensorValueAccumulator}", "{arguments}.0", "{arguments}.1"]
             }
         },

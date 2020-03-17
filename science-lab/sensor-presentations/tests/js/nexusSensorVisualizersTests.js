@@ -4,23 +4,23 @@
 
     "use strict";
 
-    fluid.defaults("gpii.tests.visualizerTestsBase", {
+    fluid.defaults("fluid.tests.visualizerTestsBase", {
         gradeNames: ["fluid.test.testEnvironment"],
         components: {
             visualizerTester: {
-                type: "gpii.tests.visualizerTester"
+                type: "fluid.tests.visualizerTester"
             },
             sensorVisualizer: {
                 createOnEvent: "{visualizerTester}.events.onTestCaseStart",
                 options: {
-                    gradeNames: ["gpii.tests.testVisualizerBase"]
+                    gradeNames: ["fluid.tests.testVisualizerBase"]
                 }
             }
         }
     });
 
-    fluid.defaults("gpii.tests.testVisualizerBase", {
-        gradeNames: ["gpii.nexusSensorVisualizerBase"],
+    fluid.defaults("fluid.tests.testVisualizerBase", {
+        gradeNames: ["fluid.nexusSensorVisualizerBase"],
         components: {
             sensor: {
                 type: "fluid.modelComponent",
@@ -46,7 +46,7 @@
         }
     });
 
-    gpii.tests.generateVisualizerIndicatorTestSequence = function(testSpec) {
+    fluid.tests.generateVisualizerIndicatorTestSequence = function(testSpec) {
         var sequence = [];
 
         fluid.each(testSpec.sequence, function (sequenceItem) {
@@ -57,7 +57,7 @@
 
             var listener = {
                 event: "{sensorVisualizer}.visualizer.events.onUpdateCompleted",
-                listener: "gpii.tests.verifyIndicator",
+                listener: "fluid.tests.verifyIndicator",
                 args: ["{sensorVisualizer}.visualizer.dom.sensorValueIndicator", testSpec.checkAttribute, sequenceItem.attributeValue]
             };
 
@@ -66,14 +66,14 @@
         return sequence;
     };
 
-    fluid.defaults("gpii.tests.realTimeVisualizerTests", {
-        gradeNames: ["gpii.tests.visualizerTestsBase"],
+    fluid.defaults("fluid.tests.realTimeVisualizerTests", {
+        gradeNames: ["fluid.tests.visualizerTestsBase"],
         components: {
             visualizerTester: {
-                type: "gpii.tests.realTimeVisualizerTester"
+                type: "fluid.tests.realTimeVisualizerTester"
             },
             sensorVisualizer: {
-                type: "gpii.nexusSensorVisualizer.realTimeScale",
+                type: "fluid.nexusSensorVisualizer.realTimeScale",
                 options: {
                     components: {
                         visualizer: {
@@ -85,7 +85,7 @@
         }
     });
 
-    gpii.tests.realTimeVisualizerTestSequence = {
+    fluid.tests.realTimeVisualizerTestSequence = {
             checkAttribute: "height",
             // Left: sensor value change (num)
             // Right: expected corresponding change to
@@ -110,26 +110,26 @@
             ]
     };
 
-    fluid.defaults("gpii.tests.realTimeVisualizerTester", {
+    fluid.defaults("fluid.tests.realTimeVisualizerTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test real-time visualizer",
             tests: [{
                 name: "Test indicator response to sensor model changes",
                 expect: 4,
-                sequence: gpii.tests.generateVisualizerIndicatorTestSequence(gpii.tests.realTimeVisualizerTestSequence)
+                sequence: fluid.tests.generateVisualizerIndicatorTestSequence(fluid.tests.realTimeVisualizerTestSequence)
             }]
         }]
     });
 
-    fluid.defaults("gpii.tests.circularPercentageScaleVisualizerTests", {
-        gradeNames: ["gpii.tests.visualizerTestsBase"],
+    fluid.defaults("fluid.tests.circularPercentageScaleVisualizerTests", {
+        gradeNames: ["fluid.tests.visualizerTestsBase"],
         components: {
             visualizerTester: {
-                type: "gpii.tests.circularPercentageScaleVisualizerTester"
+                type: "fluid.tests.circularPercentageScaleVisualizerTester"
             },
             sensorVisualizer: {
-                type: "gpii.nexusSensorVisualizer.circleRadius",
+                type: "fluid.nexusSensorVisualizer.circleRadius",
                 options: {
                     components: {
                         visualizer: {
@@ -141,7 +141,7 @@
         }
     });
 
-    gpii.tests.circularPercentageScaleVisualizerTestSequence = {
+    fluid.tests.circularPercentageScaleVisualizerTestSequence = {
             checkAttribute: "r",
             sequence: [
                 {
@@ -163,26 +163,26 @@
             ]
     };
 
-    fluid.defaults("gpii.tests.circularPercentageScaleVisualizerTester", {
+    fluid.defaults("fluid.tests.circularPercentageScaleVisualizerTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test circular percentage scale visualizer",
             tests: [{
                 name: "Test indicator response to sensor model changes",
                 expect: 4,
-                sequence: gpii.tests.generateVisualizerIndicatorTestSequence(gpii.tests.circularPercentageScaleVisualizerTestSequence)
+                sequence: fluid.tests.generateVisualizerIndicatorTestSequence(fluid.tests.circularPercentageScaleVisualizerTestSequence)
             }]
         }]
     });
 
-    fluid.defaults("gpii.tests.horizontalBarPercentageScaleVisualizerTests", {
-        gradeNames: ["gpii.tests.visualizerTestsBase"],
+    fluid.defaults("fluid.tests.horizontalBarPercentageScaleVisualizerTests", {
+        gradeNames: ["fluid.tests.visualizerTestsBase"],
         components: {
             visualizerTester: {
-                type: "gpii.tests.horizontalBarPercentageScaleVisualizerTester"
+                type: "fluid.tests.horizontalBarPercentageScaleVisualizerTester"
             },
             sensorVisualizer: {
-                type: "gpii.nexusSensorVisualizer.horizontalBar",
+                type: "fluid.nexusSensorVisualizer.horizontalBar",
                 options: {
                     components: {
                         visualizer: {
@@ -194,7 +194,7 @@
         }
     });
 
-    gpii.tests.horizontalBarPercentageScaleVisualizerTestSequence = {
+    fluid.tests.horizontalBarPercentageScaleVisualizerTestSequence = {
             checkAttribute: "width",
             sequence: [
                 {
@@ -216,26 +216,26 @@
             ]
     };
 
-    fluid.defaults("gpii.tests.horizontalBarPercentageScaleVisualizerTester", {
+    fluid.defaults("fluid.tests.horizontalBarPercentageScaleVisualizerTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test horizontal bar percentage scale visualizer",
             tests: [{
                 name: "Test indicator response to sensor model changes",
                 expect: 4,
-                sequence: gpii.tests.generateVisualizerIndicatorTestSequence(gpii.tests.horizontalBarPercentageScaleVisualizerTestSequence)
+                sequence: fluid.tests.generateVisualizerIndicatorTestSequence(fluid.tests.horizontalBarPercentageScaleVisualizerTestSequence)
             }]
         }]
     });
 
-    fluid.defaults("gpii.tests.colorScaleVisualizerTests", {
-        gradeNames: ["gpii.tests.visualizerTestsBase"],
+    fluid.defaults("fluid.tests.colorScaleVisualizerTests", {
+        gradeNames: ["fluid.tests.visualizerTestsBase"],
         components: {
             visualizerTester: {
-                type: "gpii.tests.colorScaleVisualizerTester"
+                type: "fluid.tests.colorScaleVisualizerTester"
             },
             sensorVisualizer: {
-                type: "gpii.nexusSensorVisualizer.colorScale",
+                type: "fluid.nexusSensorVisualizer.colorScale",
                 options: {
                     components: {
                         visualizer: {
@@ -260,7 +260,7 @@
         }
     });
 
-    gpii.tests.colorScaleVisualizerTestSequence = {
+    fluid.tests.colorScaleVisualizerTestSequence = {
             checkAttribute: "transform",
             sequence: [
                 {
@@ -283,7 +283,7 @@
     };
 
 
-    gpii.tests.expectedColorBarLabelValues = [
+    fluid.tests.expectedColorBarLabelValues = [
         {
             text: "0.00 – 33.33",
             y: "406.6666666666667"
@@ -298,7 +298,7 @@
         }
     ];
 
-    gpii.tests.expectedColorBarPositionedValues = [
+    fluid.tests.expectedColorBarPositionedValues = [
         {
             text: "0",
             y: "480"
@@ -313,20 +313,20 @@
         }
     ];
 
-    fluid.defaults("gpii.tests.colorScaleVisualizerTester", {
+    fluid.defaults("fluid.tests.colorScaleVisualizerTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test color scale visualizer",
             tests: [{
                 name: "Test indicator response to sensor model changes",
                 expect: 4,
-                sequence: gpii.tests.generateVisualizerIndicatorTestSequence(gpii.tests.colorScaleVisualizerTestSequence)
+                sequence: fluid.tests.generateVisualizerIndicatorTestSequence(fluid.tests.colorScaleVisualizerTestSequence)
             },{
                 name: "Test color scale generation",
                 expect: 3,
                 sequence: [
                     {
-                        func: "gpii.tests.verifyColorScaleGeneration",
+                        func: "fluid.tests.verifyColorScaleGeneration",
                         args: ["{sensorVisualizer}"]
                     }
                 ]
@@ -340,7 +340,7 @@
                         args: ["sensorValue", 55]
                     },
                     {
-                        listener: "gpii.tests.verifyIndicatorColor",
+                        listener: "fluid.tests.verifyIndicatorColor",
                         event: "{sensorVisualizer}.visualizer.events.onUpdateCompleted",
                         args: ["{sensorVisualizer}", "#00FF00"]
                     },
@@ -349,7 +349,7 @@
                         args: ["sensorValue", 25]
                     },
                     {
-                        listener: "gpii.tests.verifyIndicatorColor",
+                        listener: "fluid.tests.verifyIndicatorColor",
                         event: "{sensorVisualizer}.visualizer.events.onUpdateCompleted",
                         args: ["{sensorVisualizer}", "#FF0000"]
                     },
@@ -358,7 +358,7 @@
                         args: ["sensorValue", 75]
                     },
                     {
-                        listener: "gpii.tests.verifyIndicatorColor",
+                        listener: "fluid.tests.verifyIndicatorColor",
                         event: "{sensorVisualizer}.visualizer.events.onUpdateCompleted",
                         args: ["{sensorVisualizer}", "#0000FF"]
                     }
@@ -368,12 +368,12 @@
                 expect: 12,
                 sequence: [
                     {
-                        func: "gpii.tests.verifyColorBarLabels",
-                        args: ["{sensorVisualizer}", "colorBarLabels", gpii.tests.expectedColorBarLabelValues]
+                        func: "fluid.tests.verifyColorBarLabels",
+                        args: ["{sensorVisualizer}", "colorBarLabels", fluid.tests.expectedColorBarLabelValues]
                     },
                     {
-                        func: "gpii.tests.verifyColorBarLabels",
-                        args: ["{sensorVisualizer}", "positionedText", gpii.tests.expectedColorBarPositionedValues]
+                        func: "fluid.tests.verifyColorBarLabels",
+                        args: ["{sensorVisualizer}", "positionedText", fluid.tests.expectedColorBarPositionedValues]
                     }
                 ]
             }
@@ -381,7 +381,7 @@
         }]
     });
 
-    gpii.tests.verifyColorBarLabels = function (sensorVisualizer, labelSelector, expectedValues) {
+    fluid.tests.verifyColorBarLabels = function (sensorVisualizer, labelSelector, expectedValues) {
 
         var barLabels = sensorVisualizer.visualizer.locate(labelSelector);
         fluid.each(barLabels, function (barLabel, idx) {
@@ -397,13 +397,13 @@
         });
     };
 
-    gpii.tests.verifyIndicatorColor = function (sensorVisualizer, expectedColor) {
+    fluid.tests.verifyIndicatorColor = function (sensorVisualizer, expectedColor) {
         var indicator = sensorVisualizer.visualizer.locate("sensorValueIndicator");
 
         jqUnit.assertEquals("Indicator fill color is expected value of " + expectedColor, expectedColor.toLowerCase(), indicator.attr("fill").toLowerCase());
     };
 
-    gpii.tests.verifyColorScaleGeneration = function (sensorVisualizer) {
+    fluid.tests.verifyColorScaleGeneration = function (sensorVisualizer) {
         var colors = sensorVisualizer.visualizer.options.scaleOptions.colors;
         // ["#FF0000", "#00FF00", "#0000FF"]
         var colorBars = sensorVisualizer.visualizer.locate("colorBars");
@@ -416,14 +416,14 @@
 
     };
 
-    fluid.defaults("gpii.tests.lineChartVisualizerTests", {
-        gradeNames: ["gpii.tests.visualizerTestsBase"],
+    fluid.defaults("fluid.tests.lineChartVisualizerTests", {
+        gradeNames: ["fluid.tests.visualizerTestsBase"],
         components: {
             visualizerTester: {
-                type: "gpii.tests.lineChartVisualizerTester"
+                type: "fluid.tests.lineChartVisualizerTester"
             },
             sensorVisualizer: {
-                type: "gpii.nexusSensorVisualizer.lineChart",
+                type: "fluid.nexusSensorVisualizer.lineChart",
                 options: {
                     components: {
                         visualizer: {
@@ -445,7 +445,7 @@
     // First value is 50, it should get popped
     // off after the final change because the
     // maxValuesRetained is set to 5
-    gpii.tests.lineChartAccumulatorExpectedValues = [
+    fluid.tests.lineChartAccumulatorExpectedValues = [
             [50, 25],
             [50, 25, 35],
             [50, 25, 35, 45],
@@ -453,7 +453,7 @@
             [25, 35, 45, 55, 65]
     ];
 
-    fluid.defaults("gpii.tests.lineChartVisualizerTester", {
+    fluid.defaults("fluid.tests.lineChartVisualizerTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test line chart visualizer",
@@ -466,62 +466,62 @@
                         args: ["sensorValue", 25]
                     },
                     {
-                        func: "gpii.tests.verifyLineChartSensorValueAccumulation",
-                        args: ["{sensorVisualizer}.sensorValueAccumulator", gpii.tests.lineChartAccumulatorExpectedValues[0]]
+                        func: "fluid.tests.verifyLineChartSensorValueAccumulation",
+                        args: ["{sensorVisualizer}.sensorValueAccumulator", fluid.tests.lineChartAccumulatorExpectedValues[0]]
                     },
                     {
                         func: "{sensorVisualizer}.sensor.applier.change",
                         args: ["sensorValue", 35]
                     },
                     {
-                        func: "gpii.tests.verifyLineChartSensorValueAccumulation",
-                        args: ["{sensorVisualizer}.sensorValueAccumulator", gpii.tests.lineChartAccumulatorExpectedValues[1]]
+                        func: "fluid.tests.verifyLineChartSensorValueAccumulation",
+                        args: ["{sensorVisualizer}.sensorValueAccumulator", fluid.tests.lineChartAccumulatorExpectedValues[1]]
                     },
                     {
                         func: "{sensorVisualizer}.sensor.applier.change",
                         args: ["sensorValue", 45]
                     },
                     {
-                        func: "gpii.tests.verifyLineChartSensorValueAccumulation",
-                        args: ["{sensorVisualizer}.sensorValueAccumulator", gpii.tests.lineChartAccumulatorExpectedValues[2]]
+                        func: "fluid.tests.verifyLineChartSensorValueAccumulation",
+                        args: ["{sensorVisualizer}.sensorValueAccumulator", fluid.tests.lineChartAccumulatorExpectedValues[2]]
                     },
                     {
                         func: "{sensorVisualizer}.sensor.applier.change",
                         args: ["sensorValue", 55]
                     },
                     {
-                        func: "gpii.tests.verifyLineChartSensorValueAccumulation",
-                        args: ["{sensorVisualizer}.sensorValueAccumulator", gpii.tests.lineChartAccumulatorExpectedValues[3]]
+                        func: "fluid.tests.verifyLineChartSensorValueAccumulation",
+                        args: ["{sensorVisualizer}.sensorValueAccumulator", fluid.tests.lineChartAccumulatorExpectedValues[3]]
                     },
                     {
                         func: "{sensorVisualizer}.sensor.applier.change",
                         args: ["sensorValue", 65]
                     },
                     {
-                        func: "gpii.tests.verifyLineChartSensorValueAccumulation",
-                        args: ["{sensorVisualizer}.sensorValueAccumulator", gpii.tests.lineChartAccumulatorExpectedValues[4]]
+                        func: "fluid.tests.verifyLineChartSensorValueAccumulation",
+                        args: ["{sensorVisualizer}.sensorValueAccumulator", fluid.tests.lineChartAccumulatorExpectedValues[4]]
                     }
                 ]
             }]
         }]
     });
 
-    gpii.tests.verifyLineChartSensorValueAccumulation = function(accumulator, expected) {
+    fluid.tests.verifyLineChartSensorValueAccumulation = function(accumulator, expected) {
         fluid.each(expected, function (expectedValue, idx) {
             var message = fluid.stringTemplate("Accumulator value at position %idx is expected value of %value", {idx: idx, value: accumulator.model.sensorValues[idx].value});
             jqUnit.assertEquals(message, expectedValue, accumulator.model.sensorValues[idx].value);
         });
     };
 
-    gpii.tests.verifyIndicator = function (indicator, checkAttribute, expectedValue) {
+    fluid.tests.verifyIndicator = function (indicator, checkAttribute, expectedValue) {
         var message = fluid.stringTemplate("Attribute '%checkAttribute' is expected value of %expectedValue", {checkAttribute: checkAttribute, expectedValue: expectedValue});
         jqUnit.assertEquals(message, expectedValue, indicator.attr(checkAttribute));
     };
 
-    gpii.tests.realTimeVisualizerTests();
-    gpii.tests.circularPercentageScaleVisualizerTests();
-    gpii.tests.horizontalBarPercentageScaleVisualizerTests();
-    gpii.tests.colorScaleVisualizerTests();
-    gpii.tests.lineChartVisualizerTests();
+    fluid.tests.realTimeVisualizerTests();
+    fluid.tests.circularPercentageScaleVisualizerTests();
+    fluid.tests.horizontalBarPercentageScaleVisualizerTests();
+    fluid.tests.colorScaleVisualizerTests();
+    fluid.tests.lineChartVisualizerTests();
 
 }());

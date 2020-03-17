@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../../../node_modules/flocking/src/ugens/math.js"></script>
         <script type="text/javascript" src="../../../../node_modules/flocking/src/ugens/envelopes.js"></script>
 
-        <script type="text/javascript" src="../../../../node_modules/gpii-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
+        <script type="text/javascript" src="../../../../node_modules/infusion-nexus-client/src/NexusWebSocketBoundComponent.js"></script>
 
         <script type="text/javascript" src="../js/sensorPlayer.js"></script>
         <script type="text/javascript" src="../js/nexusSensorPresentationPanel.js"></script>
@@ -44,10 +44,10 @@
             var environment = flock.init();
             environment.start();
 
-            var sensorSonifier = gpii.sensorPlayer.sensorSonifier({
+            var sensorSonifier = fluid.sensorPlayer.sensorSonifier({
                     components: {
                         sensorDisplayDebug: {
-                            type: "gpii.sensorPlayer.sensorDisplayDebug",
+                            type: "fluid.sensorPlayer.sensorDisplayDebug",
                             container: ".debugContainer"
                         }
                     }

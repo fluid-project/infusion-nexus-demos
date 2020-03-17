@@ -93,7 +93,7 @@ Get the Nexus Demos
 -------------------
 
     $ cd ~
-    $ git clone https://github.com/simonbates/nexus-demos.git
+    $ git clone https://github.com/fluid-project/infusion-nexus-demos.git
     $ cd nexus-demos
     $ npm install
 

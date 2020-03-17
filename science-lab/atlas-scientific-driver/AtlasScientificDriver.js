@@ -1,10 +1,9 @@
 "use strict";
 
 var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii"),
     SerialPort = require("serialport");
 
-fluid.defaults("gpii.nexus.atlasScientificConnection", {
+fluid.defaults("fluid.nexus.atlasScientificConnection", {
     gradeNames: "fluid.component",
 
     devicePath: null, // To be provided by user
@@ -17,10 +16,10 @@ fluid.defaults("gpii.nexus.atlasScientificConnection", {
     },
 
     members: {
-        serialPortParser: "@expand:gpii.nexus.atlasScientificConnection.constructReadlineCrParser()",
+        serialPortParser: "@expand:fluid.nexus.atlasScientificConnection.constructReadlineCrParser()",
         serialPort: {
             expander: {
-                funcName: "gpii.nexus.atlasScientificConnection.constructSerialPort",
+                funcName: "fluid.nexus.atlasScientificConnection.constructSerialPort",
                 args: [
                     "{that}.options.devicePath",
                     "{that}.options.serialPortOptions",
@@ -39,7 +38,7 @@ fluid.defaults("gpii.nexus.atlasScientificConnection", {
             args: ["{that}.openCallback"]
         },
         openCallback: {
-            funcName: "gpii.nexus.atlasScientificConnection.openCallback",
+            funcName: "fluid.nexus.atlasScientificConnection.openCallback",
             args: [
                 "{arguments}.0", // Error
                 "{that}.events.onStarted",
@@ -65,7 +64,7 @@ fluid.defaults("gpii.nexus.atlasScientificConnection", {
 
     listeners: {
         "onData.parseResponse": {
-            listener: "gpii.nexus.atlasScientificConnection.parseResponse",
+            listener: "fluid.nexus.atlasScientificConnection.parseResponse",
             args: [
                 "{that}",
                 "{arguments}.0" // Response
@@ -74,11 +73,11 @@ fluid.defaults("gpii.nexus.atlasScientificConnection", {
     }
 });
 
-gpii.nexus.atlasScientificConnection.constructReadlineCrParser = function () {
+fluid.nexus.atlasScientificConnection.constructReadlineCrParser = function () {
     return SerialPort.parsers.readline("\r");
 };
 
-gpii.nexus.atlasScientificConnection.constructSerialPort = function (devicePath, serialPortOptions, serialPortParser, onDataEvent, onCloseEvent) {
+fluid.nexus.atlasScientificConnection.constructSerialPort = function (devicePath, serialPortOptions, serialPortParser, onDataEvent, onCloseEvent) {
 
     var options = fluid.extend({}, serialPortOptions);
     options.parser = serialPortParser;
@@ -96,7 +95,7 @@ gpii.nexus.atlasScientificConnection.constructSerialPort = function (devicePath,
     return port;
 };
 
-gpii.nexus.atlasScientificConnection.openCallback = function (error, successEvent, errorEvent) {
+fluid.nexus.atlasScientificConnection.openCallback = function (error, successEvent, errorEvent) {
     if (error) {
         errorEvent.fire(error);
     } else {
@@ -104,7 +103,7 @@ gpii.nexus.atlasScientificConnection.openCallback = function (error, successEven
     }
 };
 
-gpii.nexus.atlasScientificConnection.parseResponse = function (that, response) {
+fluid.nexus.atlasScientificConnection.parseResponse = function (that, response) {
     if (/^\d/.test(response)) {
         // Response starts with a digit, parse as a reading
         that.events.onReading.fire(fluid.transform(response.split(","), parseFloat));
@@ -120,7 +119,7 @@ gpii.nexus.atlasScientificConnection.parseResponse = function (that, response) {
     }
 };
 
-fluid.defaults("gpii.nexus.atlasScientificDriver", {
+fluid.defaults("fluid.nexus.atlasScientificDriver", {
     gradeNames: "fluid.modelComponent",
 
     devicePath: null, // To be provided by user
@@ -135,7 +134,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
             rangeMax: 20000,
             nexusPeerComponentPath: "ecSensor",
             nexusPeerComponentOptions: {
-                type: "gpii.nexus.atlasScientificDriver.ecSensor"
+                type: "fluid.nexus.atlasScientificDriver.ecSensor"
             }
         },
         "pH": {
@@ -145,14 +144,14 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
             rangeMax: 14,
             nexusPeerComponentPath: "phSensor",
             nexusPeerComponentOptions: {
-                type: "gpii.nexus.atlasScientificDriver.phSensor"
+                type: "fluid.nexus.atlasScientificDriver.phSensor"
             }
         }
     },
 
     components: {
         atlasScientificConnection: {
-            type: "gpii.nexus.atlasScientificConnection",
+            type: "fluid.nexus.atlasScientificConnection",
             options: {
                 devicePath: "{atlasScientificDriver}.options.devicePath",
                 events: {
@@ -186,7 +185,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
                     nexusPort: "{atlasScientificDriver}.options.nexusPort",
                     nexusPeerComponentPath: {
                         expander: {
-                            func: "gpii.nexus.atlasScientificDriver.lookupCircuitData",
+                            func: "fluid.nexus.atlasScientificDriver.lookupCircuitData",
                             args: [
                                 "{atlasScientificDriver}.options.circuitTypes",
                                 "{that}.options.circuitType",
@@ -196,7 +195,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
                     },
                     nexusPeerComponentOptions: {
                         expander: {
-                            func: "gpii.nexus.atlasScientificDriver.lookupCircuitData",
+                            func: "fluid.nexus.atlasScientificDriver.lookupCircuitData",
                             args: [
                                 "{atlasScientificDriver}.options.circuitTypes",
                                 "{that}.options.circuitType",
@@ -212,7 +211,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
                     sensorData: {
                         name: {
                             expander: {
-                                func: "gpii.nexus.atlasScientificDriver.lookupCircuitData",
+                                func: "fluid.nexus.atlasScientificDriver.lookupCircuitData",
                                 args: [
                                     "{atlasScientificDriver}.options.circuitTypes",
                                     "{that}.options.circuitType",
@@ -222,7 +221,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
                         },
                         units: {
                             expander: {
-                                func: "gpii.nexus.atlasScientificDriver.lookupCircuitData",
+                                func: "fluid.nexus.atlasScientificDriver.lookupCircuitData",
                                 args: [
                                     "{atlasScientificDriver}.options.circuitTypes",
                                     "{that}.options.circuitType",
@@ -232,7 +231,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
                         },
                         rangeMin: {
                             expander: {
-                                func: "gpii.nexus.atlasScientificDriver.lookupCircuitData",
+                                func: "fluid.nexus.atlasScientificDriver.lookupCircuitData",
                                 args: [
                                     "{atlasScientificDriver}.options.circuitTypes",
                                     "{that}.options.circuitType",
@@ -242,7 +241,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
                         },
                         rangeMax: {
                             expander: {
-                                func: "gpii.nexus.atlasScientificDriver.lookupCircuitData",
+                                func: "fluid.nexus.atlasScientificDriver.lookupCircuitData",
                                 args: [
                                     "{atlasScientificDriver}.options.circuitTypes",
                                     "{that}.options.circuitType",
@@ -259,7 +258,7 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
                 },
                 listeners: {
                     "{atlasScientificConnection}.events.onReading": {
-                        listener: "gpii.nexus.atlasScientificDriver.updateModelSensorValue",
+                        listener: "fluid.nexus.atlasScientificDriver.updateModelSensorValue",
                         args: [
                             "{that}",
                             "{arguments}.0" // Sensor reading
@@ -287,11 +286,11 @@ fluid.defaults("gpii.nexus.atlasScientificDriver", {
 
 });
 
-gpii.nexus.atlasScientificDriver.lookupCircuitData = function (circuitTypes, deviceType, key) {
+fluid.nexus.atlasScientificDriver.lookupCircuitData = function (circuitTypes, deviceType, key) {
     return circuitTypes[deviceType][key];
 };
 
-gpii.nexus.atlasScientificDriver.updateModelSensorValue = function (nexusBinding, sensorReading) {
+fluid.nexus.atlasScientificDriver.updateModelSensorValue = function (nexusBinding, sensorReading) {
     // Use the first value from the sensor reading
     //
     // For more information, see the Atlas Scientific circuit

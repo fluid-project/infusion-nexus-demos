@@ -1,44 +1,42 @@
 (function () {
     "use strict";
 
-    var gpii = fluid.registerNamespace("gpii");
-
     // Sonification presentation panel
-    fluid.defaults("gpii.nexusSensorVisualizationPanel", {
-        gradeNames: ["gpii.nexusSensorPresentationPanel"],
+    fluid.defaults("fluid.nexusSensorVisualizationPanel", {
+        gradeNames: ["fluid.nexusSensorPresentationPanel"],
         // Key-value pairs of sensorIds / sensorPresenter grades
         perSensorPresentationGrades: {
-            "fakeSensorPH": "gpii.nexusSensorVisualizer.pHScale",
-            "fakeSensorTemperature": "gpii.nexusSensorVisualizer.temperature",
-            "rpiTempSensor1": "gpii.nexusSensorVisualizer.temperature",
-            "rpiTempSensor2": "gpii.nexusSensorVisualizer.temperature",
-            "phSensor": "gpii.nexusSensorVisualizer.pHScale"
+            "fakeSensorPH": "fluid.nexusSensorVisualizer.pHScale",
+            "fakeSensorTemperature": "fluid.nexusSensorVisualizer.temperature",
+            "rpiTempSensor1": "fluid.nexusSensorVisualizer.temperature",
+            "rpiTempSensor2": "fluid.nexusSensorVisualizer.temperature",
+            "phSensor": "fluid.nexusSensorVisualizer.pHScale"
         },
         dynamicComponentContainerOptions: {
             // fluid.stringTemplate
             containerIndividualClassTemplate: "nexus-nexusSensorSonificationPanel-sensorDisplay-%sensorId"
         },
-        defaultSensorPresentationGrade: "gpii.nexusSensorVisualizer.realTimeScale",
+        defaultSensorPresentationGrade: "fluid.nexusSensorVisualizer.realTimeScale",
         invokers: {
             "generatePresenterOptionsBlock": {
-                funcName: "gpii.nexusSensorVisualizationPanel.getSensorPresenterOptionsBlock",
+                funcName: "fluid.nexusSensorVisualizationPanel.getSensorPresenterOptionsBlock",
                 args: ["{arguments}.0", "{arguments}.1", "{arguments}.2"]
             }
         }
     });
 
-    gpii.nexusSensorVisualizationPanel.getSensorPresenterOptions = function (sensorId, sensorName, sensorPresentationPanel) {
+    fluid.nexusSensorVisualizationPanel.getSensorPresenterOptions = function (sensorId, sensorName, sensorPresentationPanel) {
 
-        var sensorPresenterModelOptions = gpii.nexusSensorPresentationPanel.getSensorModelOptions(sensorId);
+        var sensorPresenterModelOptions = fluid.nexusSensorPresentationPanel.getSensorModelOptions(sensorId);
 
         var sensorPresenterContainerClass = fluid.stringTemplate(sensorPresentationPanel.options.dynamicComponentContainerOptions.containerIndividualClassTemplate, {sensorId: sensorId});
 
-        var sensorPresenterListenerOptions = gpii.nexusSensorPresentationPanel.getSensorPresenterListenerOptions(sensorId, sensorPresenterContainerClass, sensorName);
+        var sensorPresenterListenerOptions = fluid.nexusSensorPresentationPanel.getSensorPresenterListenerOptions(sensorId, sensorPresenterContainerClass, sensorName);
 
         return sensorPresentationPanel.generatePresenterOptionsBlock(sensorPresenterModelOptions, sensorPresenterListenerOptions, sensorPresenterContainerClass);
     };
 
-    gpii.nexusSensorVisualizationPanel.getSensorPresenterOptionsBlock = function (sensorPresenterModelOptions, sensorPresenterListenerOptions, sensorPresenterContainerClass) {
+    fluid.nexusSensorVisualizationPanel.getSensorPresenterOptionsBlock = function (sensorPresenterModelOptions, sensorPresenterListenerOptions, sensorPresenterContainerClass) {
         var optionsBlock = {
                 events: {
                     onSensorDisplayContainerAppended: null
@@ -60,7 +58,7 @@
     };
 
     // Abstract grade used by sensor visualizer
-    fluid.defaults("gpii.nexusSensorVisualizerBase", {
+    fluid.defaults("fluid.nexusSensorVisualizerBase", {
         gradeNames: ["fluid.component"],
         events: {
             onSensorDisplayContainerAppended: null
@@ -85,7 +83,7 @@
         }
     });
 
-    fluid.defaults("gpii.nexusVisualizerBase", {
+    fluid.defaults("fluid.nexusVisualizerBase", {
         gradeNames: ["floe.svgDrawingArea"],
         events: {
             onUpdateCompleted: null

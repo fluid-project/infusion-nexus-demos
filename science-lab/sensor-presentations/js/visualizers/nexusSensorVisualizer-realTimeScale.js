@@ -1,14 +1,13 @@
 (function () {
     "use strict";
 
-    var gpii = fluid.registerNamespace("gpii");
     var d3 = fluid.registerNamespace("d3");
 
-    fluid.defaults("gpii.nexusSensorVisualizer.realTimeScale", {
-        gradeNames: ["gpii.nexusSensorVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.realTimeScale", {
+        gradeNames: ["fluid.nexusSensorVisualizerBase"],
         components: {
             visualizer: {
-                type: "gpii.nexusSensorVisualizer.realTimeScale.visualizer",
+                type: "fluid.nexusSensorVisualizer.realTimeScale.visualizer",
                 options: {
                     scaleOptions: {
                         min: "{realTimeScale}.sensor.model.sensorMin",
@@ -22,8 +21,8 @@
         }
     });
 
-    fluid.defaults("gpii.nexusSensorVisualizer.realTimeScale.visualizer", {
-        gradeNames: ["gpii.nexusVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.realTimeScale.visualizer", {
+        gradeNames: ["fluid.nexusVisualizerBase"],
         model: {
             svgTitle: "An animated real-time scale.",
             svgDescription: "An animated real-time scale."
@@ -47,16 +46,16 @@
         },
         invokers: {
             "createVisualizer": {
-                funcName: "gpii.nexusSensorVisualizer.realTimeScale.visualizer.createRealTimeVisualizer",
+                funcName: "fluid.nexusSensorVisualizer.realTimeScale.visualizer.createRealTimeVisualizer",
                 args: ["{that}"]
             },
             "updateVisualizer": {
-                funcName: "gpii.nexusSensorVisualizer.realTimeScale.visualizer.updateVisualization"
+                funcName: "fluid.nexusSensorVisualizer.realTimeScale.visualizer.updateVisualization"
             }
         }
     });
 
-    gpii.nexusSensorVisualizer.realTimeScale.visualizer.createSensorValueIndicator = function (that) {
+    fluid.nexusSensorVisualizer.realTimeScale.visualizer.createSensorValueIndicator = function (that) {
         var h = that.options.svgOptions.height,
             w = that.options.svgOptions.width,
             padding = that.options.scaleOptions.padding,
@@ -81,7 +80,7 @@
           });
     };
 
-    gpii.nexusSensorVisualizer.realTimeScale.visualizer.createRealTimeVisualizer = function (that) {
+    fluid.nexusSensorVisualizer.realTimeScale.visualizer.createRealTimeVisualizer = function (that) {
 
         var h = that.options.svgOptions.height,
             padding = that.options.scaleOptions.padding,
@@ -93,11 +92,11 @@
                .domain([scaleMin, scaleMax])
                .range([h - padding, 0 + padding]);
 
-    gpii.nexusSensorVisualizer.realTimeScale.visualizer.createYAxis(that);
-    gpii.nexusSensorVisualizer.realTimeScale.visualizer.createSensorValueIndicator(that);
+    fluid.nexusSensorVisualizer.realTimeScale.visualizer.createYAxis(that);
+    fluid.nexusSensorVisualizer.realTimeScale.visualizer.createSensorValueIndicator(that);
  };
 
- gpii.nexusSensorVisualizer.realTimeScale.visualizer.createYAxis = function (that) {
+ fluid.nexusSensorVisualizer.realTimeScale.visualizer.createYAxis = function (that) {
      var leftPadding = that.options.scaleOptions.leftPadding;
 
      var yAxis = d3.svg.axis().scale(that.yScale).orient("left").innerTickSize(25);
@@ -106,7 +105,7 @@
         .attr("transform", "translate(" + leftPadding + ")");
  };
 
-    gpii.nexusSensorVisualizer.realTimeScale.visualizer.updateVisualization = function (visualizer, change) {
+    fluid.nexusSensorVisualizer.realTimeScale.visualizer.updateVisualization = function (visualizer, change) {
 
         var h = visualizer.options.svgOptions.height,
             padding = visualizer.options.scaleOptions.padding;

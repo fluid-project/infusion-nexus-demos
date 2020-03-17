@@ -1,13 +1,12 @@
 (function () {
     "use strict";
-    var gpii = fluid.registerNamespace("gpii");
 
-    fluid.defaults("gpii.nexusSensorVisualizer.sensorPercentage", {
+    fluid.defaults("fluid.nexusSensorVisualizer.sensorPercentage", {
         gradeNames: ["fluid.modelComponent"],
         modelRelay: [{
             target: "sensorPercentage",
             singleTransform: {
-                type: "gpii.sensorPlayer.transforms.minMaxScale",
+                type: "fluid.sensorPlayer.transforms.minMaxScale",
                 input: "{sensor}.model.sensorValue",
                 inputScaleMax: "{sensor}.model.sensorMax",
                 inputScaleMin: "{sensor}.model.sensorMin",
@@ -17,22 +16,22 @@
         }]
     });
 
-    fluid.defaults("gpii.nexusSensorVisualizer.circleRadius", {
-        gradeNames: ["gpii.nexusSensorVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.circleRadius", {
+        gradeNames: ["fluid.nexusSensorVisualizerBase"],
         components: {
             sensor: {
                 options: {
-                    gradeNames: ["gpii.nexusSensorVisualizer.sensorPercentage"]
+                    gradeNames: ["fluid.nexusSensorVisualizer.sensorPercentage"]
                 }
             },
             visualizer: {
-                type: "gpii.nexusSensorVisualizer.circleRadius.visualizer"
+                type: "fluid.nexusSensorVisualizer.circleRadius.visualizer"
             }
         }
     });
 
-    fluid.defaults("gpii.nexusSensorVisualizer.circleRadius.visualizer", {
-        gradeNames: ["gpii.nexusSensorPresentationPanel.fadeInPresenter",  "gpii.nexusVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.circleRadius.visualizer", {
+        gradeNames: ["fluid.nexusSensorPresentationPanel.fadeInPresenter",  "fluid.nexusVisualizerBase"],
         selectors: {
             sensorValueIndicator: ".nexus-nexusSensorVisualizationPanel-sensorDisplay-circle"
         },
@@ -42,16 +41,16 @@
         },
         invokers: {
             createVisualizer: {
-                funcName: "gpii.nexusSensorVisualizer.circleRadius.visualizer.createVisualizer",
+                funcName: "fluid.nexusSensorVisualizer.circleRadius.visualizer.createVisualizer",
                 args: ["{that}", "{sensor}.model.sensorPercentage"]
             },
             updateVisualizer: {
-                funcName: "gpii.nexusSensorVisualizer.circleRadius.visualizer.updateVisualization"
+                funcName: "fluid.nexusSensorVisualizer.circleRadius.visualizer.updateVisualization"
             }
         }
     });
 
-    gpii.nexusSensorVisualizer.circleRadius.visualizer.createVisualizer = function (that, initialSensorValue) {
+    fluid.nexusSensorVisualizer.circleRadius.visualizer.createVisualizer = function (that, initialSensorValue) {
         var svg = that.svg,
             height = that.options.svgOptions.height,
             width = that.options.svgOptions.width;
@@ -77,7 +76,7 @@
             });
     };
 
-    gpii.nexusSensorVisualizer.circleRadius.visualizer.updateVisualization = function (visualizer, change) {
+    fluid.nexusSensorVisualizer.circleRadius.visualizer.updateVisualization = function (visualizer, change) {
 
         var height = visualizer.options.svgOptions.height;
 
@@ -93,22 +92,22 @@
         });
     };
 
-    fluid.defaults("gpii.nexusSensorVisualizer.horizontalBar", {
-        gradeNames: ["gpii.nexusSensorVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.horizontalBar", {
+        gradeNames: ["fluid.nexusSensorVisualizerBase"],
         components: {
             sensor: {
                 options: {
-                    gradeNames: ["gpii.nexusSensorVisualizer.sensorPercentage"]
+                    gradeNames: ["fluid.nexusSensorVisualizer.sensorPercentage"]
                 }
             },
             visualizer: {
-                type: "gpii.nexusSensorVisualizer.horizontalBar.visualizer"
+                type: "fluid.nexusSensorVisualizer.horizontalBar.visualizer"
             }
         }
     });
 
-    fluid.defaults("gpii.nexusSensorVisualizer.horizontalBar.visualizer", {
-        gradeNames: ["gpii.nexusSensorPresentationPanel.fadeInPresenter", "gpii.nexusVisualizerBase"],
+    fluid.defaults("fluid.nexusSensorVisualizer.horizontalBar.visualizer", {
+        gradeNames: ["fluid.nexusSensorPresentationPanel.fadeInPresenter", "fluid.nexusVisualizerBase"],
         selectors: {
             sensorValueIndicator: ".nexus-nexusSensorVisualizationPanel-sensorDisplay-bar"
         },
@@ -118,17 +117,17 @@
         },
         invokers: {
             createVisualizer: {
-                funcName: "gpii.nexusSensorVisualizer.horizontalBar.visualizer.createVisualizer",
+                funcName: "fluid.nexusSensorVisualizer.horizontalBar.visualizer.createVisualizer",
                 args: ["{that}", "{sensor}.model.sensorPercentage"]
             },
             updateVisualizer: {
                 funcName:
-                "gpii.nexusSensorVisualizer.horizontalBar.visualizer.updateVisualization"
+                "fluid.nexusSensorVisualizer.horizontalBar.visualizer.updateVisualization"
             }
         }
     });
 
-    gpii.nexusSensorVisualizer.horizontalBar.visualizer.createVisualizer = function (that, initialValue) {
+    fluid.nexusSensorVisualizer.horizontalBar.visualizer.createVisualizer = function (that, initialValue) {
         var svg = that.svg,
             width = that.options.svgOptions.width,
             height = that.options.svgOptions.height;
@@ -150,7 +149,7 @@
             });
     };
 
-    gpii.nexusSensorVisualizer.horizontalBar.visualizer.updateVisualization = function (visualizer, change) {
+    fluid.nexusSensorVisualizer.horizontalBar.visualizer.updateVisualization = function (visualizer, change) {
         var bar = visualizer.sensorValueIndicator,
             width = visualizer.options.svgOptions.width;
 

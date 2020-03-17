@@ -3,7 +3,7 @@
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
-require("gpii-nexus-client");
+require("infusion-nexus-client");
 
 var nexusHost = "localhost";
 var nexusPort = 9081;
@@ -13,7 +13,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.fakeSensor",
+            "fluid.nexus.fakeSensor",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -26,7 +26,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.fakeSensorPH",
+            "fluid.nexus.fakeSensorPH",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -39,7 +39,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.fakeSensorTemperature",
+            "fluid.nexus.fakeSensorTemperature",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -52,7 +52,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.atlasScientificDriver.phSensor",
+            "fluid.nexus.atlasScientificDriver.phSensor",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -65,7 +65,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.atlasScientificDriver.ecSensor",
+            "fluid.nexus.atlasScientificDriver.ecSensor",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -78,7 +78,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.rpiSenseHatDriver.tempSensor1",
+            "fluid.nexus.rpiSenseHatDriver.tempSensor1",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -91,7 +91,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.rpiSenseHatDriver.tempSensor2",
+            "fluid.nexus.rpiSenseHatDriver.tempSensor2",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -104,7 +104,7 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.collector",
+            "fluid.nexus.scienceLab.collector",
             {
                 gradeNames: [ "fluid.modelComponent" ],
                 model: {
@@ -117,9 +117,9 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.sendFakeSensor",
+            "fluid.nexus.scienceLab.sendFakeSensor",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: [ "fluid.nexus.recipeProduct" ],
                 componentPaths: {
                     fakeSensor: null,
                     collector: null
@@ -151,9 +151,9 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.sendfakeSensorPH",
+            "fluid.nexus.scienceLab.sendfakeSensorPH",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: [ "fluid.nexus.recipeProduct" ],
                 componentPaths: {
                     fakeSensorPH: null,
                     collector: null
@@ -185,9 +185,9 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.sendfakeSensorTemperature",
+            "fluid.nexus.scienceLab.sendfakeSensorTemperature",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: [ "fluid.nexus.recipeProduct" ],
                 componentPaths: {
                     fakeSensorTemperature: null,
                     collector: null
@@ -219,9 +219,9 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.sendPhSensor",
+            "fluid.nexus.scienceLab.sendPhSensor",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: [ "fluid.nexus.recipeProduct" ],
                 componentPaths: {
                     phSensor: null,
                     collector: null
@@ -253,9 +253,9 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.sendEcSensor",
+            "fluid.nexus.scienceLab.sendEcSensor",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: [ "fluid.nexus.recipeProduct" ],
                 componentPaths: {
                     ecSensor: null,
                     collector: null
@@ -287,9 +287,9 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.sendRpiTempSensor1",
+            "fluid.nexus.scienceLab.sendRpiTempSensor1",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: [ "fluid.nexus.recipeProduct" ],
                 componentPaths: {
                     tempSensor: null,
                     collector: null
@@ -321,9 +321,9 @@ fluid.promise.sequence([
         return gpii.writeNexusDefaults(
             nexusHost,
             nexusPort,
-            "gpii.nexus.scienceLab.sendRpiTempSensor2",
+            "fluid.nexus.scienceLab.sendRpiTempSensor2",
             {
-                gradeNames: [ "gpii.nexus.recipeProduct" ],
+                gradeNames: [ "fluid.nexus.recipeProduct" ],
                 componentPaths: {
                     tempSensor: null,
                     collector: null
@@ -353,180 +353,180 @@ fluid.promise.sequence([
     },
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "scienceLabCollector", {
-            type: "gpii.nexus.scienceLab.collector"
+            type: "fluid.nexus.scienceLab.collector"
         });
     },
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendFakeSensor", {
-            type: "gpii.nexus.recipe",
+            type: "fluid.nexus.recipe",
             reactants: {
                 fakeSensor: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.fakeSensor"
+                        gradeName: "fluid.nexus.fakeSensor"
                     }
                 },
                 collector: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.scienceLab.collector"
+                        gradeName: "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             product: {
                 path: "sendFakeSensor",
                 options: {
-                    type: "gpii.nexus.scienceLab.sendFakeSensor"
+                    type: "fluid.nexus.scienceLab.sendFakeSensor"
                 }
             }
         });
     },
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendfakeSensorPH", {
-            type: "gpii.nexus.recipe",
+            type: "fluid.nexus.recipe",
             reactants: {
                 fakeSensorPH: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.fakeSensorPH"
+                        gradeName: "fluid.nexus.fakeSensorPH"
                     }
                 },
                 collector: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.scienceLab.collector"
+                        gradeName: "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             product: {
                 path: "sendfakeSensorPH",
                 options: {
-                    type: "gpii.nexus.scienceLab.sendfakeSensorPH"
+                    type: "fluid.nexus.scienceLab.sendfakeSensorPH"
                 }
             }
         });
     },
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendfakeSensorTemperature", {
-            type: "gpii.nexus.recipe",
+            type: "fluid.nexus.recipe",
             reactants: {
                 fakeSensorTemperature: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.fakeSensorTemperature"
+                        gradeName: "fluid.nexus.fakeSensorTemperature"
                     }
                 },
                 collector: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.scienceLab.collector"
+                        gradeName: "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             product: {
                 path: "sendfakeSensorTemperature",
                 options: {
-                    type: "gpii.nexus.scienceLab.sendfakeSensorTemperature"
+                    type: "fluid.nexus.scienceLab.sendfakeSensorTemperature"
                 }
             }
         });
     },    
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendPhSensor", {
-            type: "gpii.nexus.recipe",
+            type: "fluid.nexus.recipe",
             reactants: {
                 phSensor: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.atlasScientificDriver.phSensor"
+                        gradeName: "fluid.nexus.atlasScientificDriver.phSensor"
                     }
                 },
                 collector: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.scienceLab.collector"
+                        gradeName: "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             product: {
                 path: "sendPhSensor",
                 options: {
-                    type: "gpii.nexus.scienceLab.sendPhSensor"
+                    type: "fluid.nexus.scienceLab.sendPhSensor"
                 }
             }
         });
     },
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendEcSensor", {
-            type: "gpii.nexus.recipe",
+            type: "fluid.nexus.recipe",
             reactants: {
                 ecSensor: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.atlasScientificDriver.ecSensor"
+                        gradeName: "fluid.nexus.atlasScientificDriver.ecSensor"
                     }
                 },
                 collector: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.scienceLab.collector"
+                        gradeName: "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             product: {
                 path: "sendEcSensor",
                 options: {
-                    type: "gpii.nexus.scienceLab.sendEcSensor"
+                    type: "fluid.nexus.scienceLab.sendEcSensor"
                 }
             }
         });
     },
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendRpiTempSensor1", {
-            type: "gpii.nexus.recipe",
+            type: "fluid.nexus.recipe",
             reactants: {
                 tempSensor: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.rpiSenseHatDriver.tempSensor1"
+                        gradeName: "fluid.nexus.rpiSenseHatDriver.tempSensor1"
                     }
                 },
                 collector: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.scienceLab.collector"
+                        gradeName: "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             product: {
                 path: "sendRpiTempSensor1",
                 options: {
-                    type: "gpii.nexus.scienceLab.sendRpiTempSensor1"
+                    type: "fluid.nexus.scienceLab.sendRpiTempSensor1"
                 }
             }
         });
     },
     function () {
         return gpii.constructNexusPeer(nexusHost, nexusPort, "recipes.sendRpiTempSensor2", {
-            type: "gpii.nexus.recipe",
+            type: "fluid.nexus.recipe",
             reactants: {
                 tempSensor: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.rpiSenseHatDriver.tempSensor2"
+                        gradeName: "fluid.nexus.rpiSenseHatDriver.tempSensor2"
                     }
                 },
                 collector: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.nexus.scienceLab.collector"
+                        gradeName: "fluid.nexus.scienceLab.collector"
                     }
                 }
             },
             product: {
                 path: "sendRpiTempSensor2",
                 options: {
-                    type: "gpii.nexus.scienceLab.sendRpiTempSensor2"
+                    type: "fluid.nexus.scienceLab.sendRpiTempSensor2"
                 }
             }
         });

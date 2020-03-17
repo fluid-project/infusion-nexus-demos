@@ -1,7 +1,7 @@
 Nexus Demos
 ===========
 
-This repository contains some demos showing usage of the GPII Nexus
+This repository contains some demos showing usage of the Infusion Nexus
 integration technology:
 
 - A music demo
@@ -11,8 +11,8 @@ Getting the demos and installing dependencies
 ---------------------------------------------
 
 ```
-> git clone https://github.com/simonbates/nexus-demos.git
-> cd nexus-demos
+> git clone https://github.com/fluid-project/infusion-nexus-demos.git
+> cd infusion-nexus-demos
 > npm install
 ```
 
@@ -28,12 +28,12 @@ information.
 
 For the Music demo, the base Nexus may be used. It can be found at:
 
-- https://github.com/GPII/nexus
+- https://github.com/fluid-project/infusion-nexus
 
 For the Science lab demo, a Co-Occurrence Engine enabled Nexus is
 required. To run such a Nexus, clone the following repository:
 
-- https://github.com/simonbates/co-occurrence-engine
+- https://github.com/fluid-project/co-occurrence-engine
 
 And run:
 

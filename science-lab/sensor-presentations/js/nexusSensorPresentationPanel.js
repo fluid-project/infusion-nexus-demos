@@ -4,7 +4,7 @@
     // An "abstract" grade for presenting sensors
     // An implementing grade needs to supply
     // appropriate dynamic components
-    fluid.defaults("gpii.nexusSensorPresentationPanel", {
+    fluid.defaults("fluid.nexusSensorPresentationPanel", {
         gradeNames: ["gpii.nexusWebSocketBoundComponent", "fluid.viewComponent"],
         events: {
             onSensorAppearance: null,
@@ -18,9 +18,9 @@
         },
         dynamicComponents: {
             sensorPresenter: {
-                type: "@expand:gpii.nexusSensorPresentationPanel.getSensorPresenterType({that}, {arguments}.0)",
+                type: "@expand:fluid.nexusSensorPresentationPanel.getSensorPresenterType({that}, {arguments}.0)",
                 createOnEvent: "onSensorAppearance",
-                options: "@expand:gpii.nexusSensorPresentationPanel.getSensorPresenterOptions({arguments}.0, {arguments}.1, {arguments}.2)"
+                options: "@expand:fluid.nexusSensorPresentationPanel.getSensorPresenterOptions({arguments}.0, {arguments}.1, {arguments}.2)"
             }
         },
         members: {
@@ -43,7 +43,7 @@
         },
         invokers: {
             updateSensorPresentations: {
-                funcName: "gpii.nexusSensorPresentationPanel.updateSensorPresentations"
+                funcName: "fluid.nexusSensorPresentationPanel.updateSensorPresentations"
             }
         }
     });
@@ -51,20 +51,20 @@
     // expander function; used to generate sensor sonifiers as sensors
     // are attached; dynamically configures model characteristics and
     // container for display / controls based on the sensorId
-    gpii.nexusSensorPresentationPanel.getSensorPresenterOptions = function (sensorId, sensorName, sensorPresentationPanel) {
+    fluid.nexusSensorPresentationPanel.getSensorPresenterOptions = function (sensorId, sensorName, sensorPresentationPanel) {
 
-        var sensorPresenterModelOptions = gpii.nexusSensorPresentationPanel.getSensorModelOptions(sensorId);
+        var sensorPresenterModelOptions = fluid.nexusSensorPresentationPanel.getSensorModelOptions(sensorId);
 
         var sensorPresenterContainerClass = fluid.stringTemplate(sensorPresentationPanel.options.dynamicComponentContainerOptions.containerIndividualClassTemplate, {sensorId: sensorId});
 
-        var sensorPresenterListenerOptions = gpii.nexusSensorPresentationPanel.getSensorPresenterListenerOptions(sensorId, sensorPresenterContainerClass, sensorName);
+        var sensorPresenterListenerOptions = fluid.nexusSensorPresentationPanel.getSensorPresenterListenerOptions(sensorId, sensorPresenterContainerClass, sensorName);
 
         return sensorPresentationPanel.generatePresenterOptionsBlock (sensorPresenterModelOptions, sensorPresenterListenerOptions, sensorPresenterContainerClass);
     };
 
     // Allows specific grades for specific sensors
     // See visualization or sonification panels for implementation structure
-    gpii.nexusSensorPresentationPanel.getSensorPresenterType = function (that, sensorId) {
+    fluid.nexusSensorPresentationPanel.getSensorPresenterType = function (that, sensorId) {
         var perSensorPresentationGrades = that.options.perSensorPresentationGrades;
         if(perSensorPresentationGrades[sensorId]) {
             return perSensorPresentationGrades[sensorId];
@@ -77,7 +77,7 @@
     // 1) Fires an event when a sensor is added, argument is the sensor ID
     // 2) Fires an aggregrate event when sensors are removed, argument is
     // an array of sensor IDs
-    gpii.nexusSensorPresentationPanel.updateSensorPresentations = function (that, sensors) {
+    fluid.nexusSensorPresentationPanel.updateSensorPresentations = function (that, sensors) {
 
         var sensorsArray = fluid.hashToArray(
             sensors,
@@ -111,7 +111,7 @@
 
     // Generates common model relay options to let a presenter be
     // synchronized with a particular sensor model path
-    gpii.nexusSensorPresentationPanel.getSensorModelOptions = function (sensorId) {
+    fluid.nexusSensorPresentationPanel.getSensorModelOptions = function (sensorId) {
         var sensorModelOptions = {
             sensorId: sensorId,
             description: "{nexusSensorPresentationPanel}.model.sensors." + sensorId + ".name",
@@ -145,10 +145,10 @@
     // Calls a function of the nexusSensorPresentation panel
     // to let it clean up the container after the associated
     // presenter has been destroyed
-    gpii.nexusSensorPresentationPanel.getSensorPresenterListenerOptions = function (sensorId, sensorContainerClass, sensorName) {
+    fluid.nexusSensorPresentationPanel.getSensorPresenterListenerOptions = function (sensorId, sensorContainerClass, sensorName) {
         var sensorListenerOptions = {
            "onCreate.appendSensorDisplayContainer": {
-               funcName: "gpii.nexusSensorPresentationPanel.addSensorDisplayContainer",
+               funcName: "fluid.nexusSensorPresentationPanel.addSensorDisplayContainer",
                args: ["{nexusSensorPresentationPanel}", sensorContainerClass, sensorName]
            },
            "onCreate.fireOnSensorDisplayContainerAppended": {
@@ -156,12 +156,12 @@
                priority: "after:appendSensorDisplayContainer"
            },
            "{nexusSensorPresentationPanel}.events.onSensorRemoval": {
-              funcName: "gpii.nexusSensorPresentationPanel.checkForRemoval",
+              funcName: "fluid.nexusSensorPresentationPanel.checkForRemoval",
               args: ["{that}", "{that}.sensor", "{arguments}.0"],
               namespace: "removeSensorPresenter-"+sensorId
           },
            "onDestroy.removeSensorDisplayContainer": {
-               funcName: "gpii.nexusSensorPresentationPanel.removeSensorDisplayContainer",
+               funcName: "fluid.nexusSensorPresentationPanel.removeSensorDisplayContainer",
                args: ["{nexusSensorPresentationPanel}", sensorContainerClass]
            }
         };
@@ -172,7 +172,7 @@
 
     // Adds sensor display containers in alphabetical order by
     // sensor name
-    gpii.nexusSensorPresentationPanel.addSensorDisplayContainer = function (nexusSensorPresentationPanel, sensorContainerClass, sensorName) {
+    fluid.nexusSensorPresentationPanel.addSensorDisplayContainer = function (nexusSensorPresentationPanel, sensorContainerClass, sensorName) {
         var attachedContainers = nexusSensorPresentationPanel.attachedContainers;
 
         attachedContainers.push ({"sensorName": sensorName, "containerClass": sensorContainerClass});
@@ -205,7 +205,7 @@
     // Function used by the nexusSensorPresentationPanel to remove
     // dynamically generated container markup when a sensor is
     // removed
-    gpii.nexusSensorPresentationPanel.removeSensorDisplayContainer = function (nexusSensorPresentationPanel, sensorContainerClass) {
+    fluid.nexusSensorPresentationPanel.removeSensorDisplayContainer = function (nexusSensorPresentationPanel, sensorContainerClass) {
 
         // Remove from the attached containers index
         var attachedContainers = nexusSensorPresentationPanel.attachedContainers;
@@ -229,14 +229,14 @@
     // Function used by a sensorPresenter to check the array of
     // removed sensor IDs and invoke its own destroy function
     // if it matches a removed sensor ID
-    gpii.nexusSensorPresentationPanel.checkForRemoval = function (sensorPresenter, sensor, removedSensorIds) {
+    fluid.nexusSensorPresentationPanel.checkForRemoval = function (sensorPresenter, sensor, removedSensorIds) {
         if(fluid.contains(removedSensorIds,fluid.get(sensor.model, "sensorId"))) {
             sensorPresenter.destroy();
         }
     };
 
     // Mix-in grade for viewComponents - start hidden, then fade in
-    fluid.defaults("gpii.nexusSensorPresentationPanel.fadeInPresenter", {
+    fluid.defaults("fluid.nexusSensorPresentationPanel.fadeInPresenter", {
         listeners: {
             // Start hidden
             "onCreate.hideContainer": {
